@@ -1,12 +1,14 @@
 // Vendor
 import React from 'react';
-import { Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+
+import { BottomNavigator } from '@uno/components/BottomNavigator';
 
 const App = () => {
   return (
-    <View>
-      <Text>Uno Calculator</Text>
-    </View>
+    <NavigationContainer>
+      <BottomNavigator />
+    </NavigationContainer>
   );
 };
 
