@@ -1,14 +1,17 @@
 // Vendor
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-
 import { BottomNavigator } from '@uno/components/BottomNavigator';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <BottomNavigator />
-    </NavigationContainer>
+    <>
+      <StatusBar barStyle="light-content" />
+      <NavigationContainer>
+        <BottomNavigator />
+      </NavigationContainer>
+    </>
   );
 };
 
