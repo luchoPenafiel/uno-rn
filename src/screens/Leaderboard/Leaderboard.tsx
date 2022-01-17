@@ -1,11 +1,14 @@
 // Vendor
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
+
+// Components
+import { PageWrapper } from '@uno/components/PageWrapper';
 
 export const Leaderboard = () => {
   return (
-    <View>
+    <PageWrapper>
       <Text>Leaderboard Screen</Text>
-    </View>
+    </PageWrapper>
   );
 };

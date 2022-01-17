@@ -1,11 +1,14 @@
 // Vendor
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
+
+// Components
+import { PageWrapper } from '@uno/components/PageWrapper';
 
 export const Game = () => {
   return (
-    <View>
+    <PageWrapper>
       <Text>Game Screen</Text>
-    </View>
+    </PageWrapper>
   );
 };

@@ -15,11 +15,12 @@ const BottomTabs = createBottomTabNavigator();
 
 const customStyles = {
   headerStyle: {
-    backgroundColor: theme.color.dark,
+    backgroundColor: theme.color.darkGray,
+    borderColor: 'red',
   },
   headerTintColor: theme.color.white,
   tabBarStyle: {
-    backgroundColor: theme.color.dark,
+    backgroundColor: theme.color.darkGray,
   },
   tabBarActiveTintColor: theme.color.yellow,
   tabBarInactiveTintColor: theme.color.white,
