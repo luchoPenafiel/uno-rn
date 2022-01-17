@@ -28,6 +28,7 @@ const customStyles = {
 export const BottomNavigator = (): ReactElement => {
   return (
     <BottomTabs.Navigator
+      initialRouteName="Partida"
       screenOptions={({ route }) => ({
         ...customStyles,
         tabBarIcon: ({ color, size }) => {
