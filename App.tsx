@@ -1,16 +1,18 @@
 // Vendor
 import React from 'react';
-import { StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { BottomNavigator } from '@uno/components/BottomNavigator';
+import { StatusBar, LogBox } from 'react-native';
+
+import { Routes } from '@uno/routes/routes';
+
+LogBox.ignoreLogs([
+  "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
+]);
 
 const App = () => {
   return (
     <>
       <StatusBar barStyle="light-content" />
-      <NavigationContainer>
-        <BottomNavigator />
-      </NavigationContainer>
+      <Routes />
     </>
   );
 };
