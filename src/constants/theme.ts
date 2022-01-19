@@ -9,4 +9,10 @@ export default {
     white: '#fff',
     gray: '#adadad',
   },
+  spaces: {
+    s: 8,
+    m: 12,
+    l: 24,
+    xl: 32,
+  },
 };
