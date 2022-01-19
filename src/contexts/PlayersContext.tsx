@@ -30,7 +30,7 @@ const getAppData = async (): Promise<PlayersData | null> => {
 
 type PlayersContextType = {
   playerList: Player[];
-  handleAddPlayer: (selectedMood: Player) => void;
+  handleAddPlayer: (selectedMood: string) => void;
   handleUpdatePlayer: (selectedMood: Player) => void;
 };
 
@@ -47,9 +47,9 @@ const PlayerContext = createContext<PlayersContextType>({
 export const PlayerContextProvider = ({ children }: Props): ReactElement => {
   const [playerList, setPlayerList] = useState<Player[]>([]);
 
-  const handleAddPlayer = useCallback((player: Player) => {
+  const handleAddPlayer = useCallback((player: string) => {
     setPlayerList(current => {
-      const newPlayer = [...current, { name: player.name, id: Date.now().toString(), points: 0 }];
+      const newPlayer = [...current, { name: player, id: Date.now().toString(), points: 0, gamesWon: 0 }];
 
       setAppData({ playerList: newPlayer });
 
@@ -64,6 +64,7 @@ export const PlayerContextProvider = ({ children }: Props): ReactElement => {
           return {
             ...p,
             points: p.points + player.points,
+            gameWon: p.gamesWon + player.gamesWon,
           };
         } else {
           return p;
@@ -77,6 +78,8 @@ export const PlayerContextProvider = ({ children }: Props): ReactElement => {
   }, []);
 
   useEffect(() => {
+    // AsyncStorage.clear();
+
     (async () => {
       const data = await getAppData();
 
