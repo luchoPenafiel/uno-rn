@@ -5,6 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Types
 import { Player } from '@uno/types/player';
 
+import mockUser from '@uno/mocks/users';
+
 const KEY = 'uno-calculator-data';
 
 type PlayersData = {
@@ -45,7 +47,7 @@ const PlayerContext = createContext<PlayersContextType>({
 });
 
 export const PlayerContextProvider = ({ children }: Props): ReactElement => {
-  const [playerList, setPlayerList] = useState<Player[]>([]);
+  const [playerList, setPlayerList] = useState<Player[]>([...mockUser]);
 
   const handleAddPlayer = useCallback((player: string) => {
     setPlayerList(current => {

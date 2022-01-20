@@ -3,15 +3,16 @@ import React from 'react';
 import { View, Text as RNText } from 'react-native';
 import styled from 'styled-components';
 
-const TextStyles = styled(RNText)`
+const TextStyles = styled(RNText)<{ align?: string }>`
   margin-bottom: 10px;
 
   font-size: 16px;
   color: white;
+  text-align: ${({ align }) => (align ? align : 'left')};
 `;
 
-export const Text = ({ children }: { children: string }) => {
-  return <TextStyles>{children}</TextStyles>;
+export const Text = ({ children, align }: { children: string; align?: string }) => {
+  return <TextStyles align={align}>{children}</TextStyles>;
 };
 
 const TitleStyles = styled(RNText)`
