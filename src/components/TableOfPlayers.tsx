@@ -41,7 +41,7 @@ const Value = styled(RNText)`
   text-align: right;
 `;
 
-export const TableOfPlayers = ({ playerList, show }: { playerList: Player[]; show: 'points' | 'games' }) => {
+export const TableOfPlayers = ({ playerList, show }: { playerList: Player[]; show: 'points' | 'gamesWon' }) => {
   return (
     <>
       {playerList.map(p => {
@@ -49,8 +49,7 @@ export const TableOfPlayers = ({ playerList, show }: { playerList: Player[]; sho
           <Wrapper key={p.id}>
             <Name>{p.name}</Name>
             <ValueWrapper>
-              {show === 'points' ? <Value>{`${p.points}`}</Value> : null}
-              {show === 'games' ? <Value>{`${p.gamesWon}`}</Value> : null}
+              <Value>{`${p[show]}`}</Value>
             </ValueWrapper>
           </Wrapper>
         );

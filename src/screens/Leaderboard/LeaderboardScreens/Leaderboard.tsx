@@ -1,5 +1,6 @@
 // Vendor
 import React, { useState } from 'react';
+import { LayoutAnimation } from 'react-native';
 
 // Components
 import { PageWrapper } from '@uno/components/PageWrapper';
@@ -16,6 +17,7 @@ export const Leaderboard = () => {
   const { playerList } = usePlayerContext();
 
   const handleChangeSortBy = (value: string) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setSortBy(value);
   };
 
@@ -26,7 +28,7 @@ export const Leaderboard = () => {
         <>
           <TabSelector onPress={handleChangeSortBy} />
           {sortBy === 'games' ? (
-            <TableOfPlayers playerList={playerList.sort((a, b) => b.gamesWon - a.gamesWon)} show={'games'} />
+            <TableOfPlayers playerList={playerList.sort((a, b) => b.gamesWon - a.gamesWon)} show={'gamesWon'} />
           ) : (
             <TableOfPlayers playerList={playerList.sort((a, b) => b.points - a.points)} show={'points'} />
           )}
