@@ -32,7 +32,7 @@ const getAppData = async (): Promise<PlayersData | null> => {
 
 type PlayersContextType = {
   playerList: Player[];
-  handleAddPlayer: (selectedMood: string) => void;
+  handleAddPlayer: (selectedMood: string) => Player;
   handleUpdatePlayer: (selectedMood: Player) => void;
 };
 
@@ -40,9 +40,16 @@ type Props = {
   children: ReactNode;
 };
 
+const DEFAULT_PLAYER = {
+  id: '',
+  name: '',
+  points: 0,
+  gamesWon: 0,
+};
+
 const PlayerContext = createContext<PlayersContextType>({
   playerList: [],
-  handleAddPlayer: () => {},
+  handleAddPlayer: () => DEFAULT_PLAYER,
   handleUpdatePlayer: () => {},
 });
 
@@ -50,13 +57,17 @@ export const PlayerContextProvider = ({ children }: Props): ReactElement => {
   const [playerList, setPlayerList] = useState<Player[]>([...mockUser]);
 
   const handleAddPlayer = useCallback((player: string) => {
+    const newPlayer = { name: player, id: Date.now().toString(), points: 0, gamesWon: 0 };
+
     setPlayerList(current => {
-      const newPlayer = [...current, { name: player, id: Date.now().toString(), points: 0, gamesWon: 0 }];
+      const newPlayerList = [...current, newPlayer];
 
-      setAppData({ playerList: newPlayer });
+      setAppData({ playerList: newPlayerList });
 
-      return newPlayer;
+      return newPlayerList;
     });
+
+    return newPlayer;
   }, []);
 
   const handleUpdatePlayer = useCallback((player: Player) => {

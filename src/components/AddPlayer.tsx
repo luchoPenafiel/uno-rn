@@ -24,6 +24,7 @@ const Input = styled(TextInput)<{ screenWidth: number }>`
   padding-bottom: ${theme.spaces.s}px;
 
   color: ${theme.color.dark};
+  font-size: 16px;
 `;
 
 const Button = styled(Pressable)<{ disabled: boolean }>`

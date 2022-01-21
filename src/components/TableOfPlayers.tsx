@@ -15,7 +15,6 @@ const Wrapper = styled(View)`
 
   padding: ${theme.spaces.m}px;
   margin-top: 10px;
-  margin-bottom: 10px;
 
   background-color: ${theme.color.gray};
   border-radius: ${theme.bordeRadius};

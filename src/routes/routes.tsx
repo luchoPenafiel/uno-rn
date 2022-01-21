@@ -17,14 +17,12 @@ import { MedalIcon, PageIcon, StarIcon } from '@uno/components/Icons';
 const BottomTabs = createBottomTabNavigator();
 
 const customStyles = {
-  headerStyle: {
-    backgroundColor: theme.color.white,
-  },
-  headerTintColor: theme.color.darkGray,
+  headerShown: false,
+  cardStyle: { backgroundColor: theme.color.blue },
   tabBarStyle: {
     backgroundColor: theme.color.white,
   },
-  tabBarActiveTintColor: theme.color.blue,
+  tabBarActiveTintColor: theme.color.red,
   tabBarInactiveTintColor: theme.color.darkGray,
 };
 
