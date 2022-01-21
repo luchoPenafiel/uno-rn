@@ -7,11 +7,11 @@ import styled from 'styled-components';
 import theme from '@uno/constants/theme';
 
 const Wrapper = styled(ScrollView)`
-  background: ${theme.color.darkGray};
+  background: ${theme.color.white};
 `;
 
 const InnerWrapper = styled(View)`
-  background: ${theme.color.darkGray};
+  background: ${theme.color.white};
   padding: 20px;
 `;
 

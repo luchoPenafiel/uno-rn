@@ -11,7 +11,7 @@ LogBox.ignoreLogs([
 const App = () => {
   return (
     <>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" />
       <Routes />
     </>
   );

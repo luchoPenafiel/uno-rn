@@ -6,6 +6,7 @@ import { PageWrapper } from '@uno/components/PageWrapper';
 import { TabSelector } from '@uno/components/TabSelector';
 import { Title } from '@uno/components/Texts';
 import { TableOfPlayers } from '@uno/components/TableOfPlayers';
+import { Text } from '@uno/components/Texts';
 
 // Context
 import { usePlayerContext } from '@uno/contexts/PlayersContext';
@@ -21,11 +22,17 @@ export const Leaderboard = () => {
   return (
     <PageWrapper>
       <Title>Tabla de posiciones</Title>
-      <TabSelector onPress={handleChangeSortBy} />
-      {sortBy === 'games' ? (
-        <TableOfPlayers playerList={playerList.sort((a, b) => b.gamesWon - a.gamesWon)} />
+      {playerList.length ? (
+        <>
+          <TabSelector onPress={handleChangeSortBy} />
+          {sortBy === 'games' ? (
+            <TableOfPlayers playerList={playerList.sort((a, b) => b.gamesWon - a.gamesWon)} show={'games'} />
+          ) : (
+            <TableOfPlayers playerList={playerList.sort((a, b) => b.points - a.points)} show={'points'} />
+          )}
+        </>
       ) : (
-        <TableOfPlayers playerList={playerList.sort((a, b) => b.points - a.points)} />
+        <Text>Juega algunas partidas para que los jugadores sumen puntos.</Text>
       )}
     </PageWrapper>
   );

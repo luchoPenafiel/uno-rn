@@ -7,12 +7,14 @@ export default {
     dark: '#000',
     darkGray: '#212327',
     white: '#fff',
-    gray: '#adadad',
+    gray: '#DCDAD5',
   },
   spaces: {
     s: 8,
     m: 12,
     l: 24,
     xl: 32,
+    '2xl': 44,
   },
+  bordeRadius: '8px',
 };

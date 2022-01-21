@@ -1,4 +1,5 @@
 // Vendor
+import theme from '@uno/constants/theme';
 import React from 'react';
 import { View, Text as RNText } from 'react-native';
 import styled from 'styled-components';
@@ -7,7 +8,7 @@ const TextStyles = styled(RNText)<{ align?: string }>`
   margin-bottom: 10px;
 
   font-size: 16px;
-  color: white;
+  color: ${theme.color.dark};
   text-align: ${({ align }) => (align ? align : 'left')};
 `;
 
@@ -21,7 +22,7 @@ const TitleStyles = styled(RNText)`
 
   font-size: 26px;
   font-weight: bold;
-  color: white;
+  color: ${theme.color.dark};
 `;
 
 export const Title = ({ children }: { children: string }) => {
@@ -34,7 +35,7 @@ const SubtitleStyles = styled(RNText)`
 
   font-size: 18px;
   font-weight: bold;
-  color: white;
+  color: ${theme.color.dark};
 `;
 
 export const Subtitle = ({ children }: { children: string }) => {
@@ -50,14 +51,14 @@ const ListItemWrapper = styled(View)`
 
 const ListItemBullet = styled(RNText)`
   font-size: 16px;
-  color: white;
+  color: ${theme.color.dark};
 `;
 
 const ListItemStyles = styled(RNText)`
   margin-left: 4px;
 
   font-size: 16px;
-  color: white;
+  color: ${theme.color.dark};
 `;
 
 export const ListItem = ({ children }: { children: string }) => {

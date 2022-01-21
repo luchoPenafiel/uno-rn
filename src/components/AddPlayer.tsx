@@ -14,14 +14,14 @@ const Wrapper = styled(View)`
 `;
 
 const InputWrapper = styled(View)`
-  border-bottom-color: ${theme.color.white};
+  border-bottom-color: ${theme.color.darkGray};
   border-bottom-width: 1px;
 `;
 
 const Input = styled(TextInput)<{ screenWidth: number }>`
   width: ${({ screenWidth }) => `${screenWidth - theme.spaces.xl - 40 - 8}px`};
 
-  color: ${theme.color.white};
+  color: ${theme.color.dark};
 `;
 
 const Button = styled(Pressable)<{ disabled: boolean }>`
@@ -32,7 +32,8 @@ const Button = styled(Pressable)<{ disabled: boolean }>`
   width: ${`${theme.spaces.xl}px`};
   height: ${`${theme.spaces.xl}px`};
 
-  background-color: ${({ disabled }) => (disabled ? theme.color.gray : theme.color.yellow)};
+  background-color: ${({ disabled }) => (disabled ? theme.color.gray : theme.color.blue)};
+  border-radius: ${theme.bordeRadius};
 `;
 
 export const AddPlayer = ({ handlePress }: { handlePress: (name: string) => void }) => {
@@ -58,7 +59,7 @@ export const AddPlayer = ({ handlePress }: { handlePress: (name: string) => void
         />
       </InputWrapper>
       <Button onPress={onPress} disabled={!name}>
-        <RNText>+</RNText>
+        <RNText style={{ color: theme.color.white }}>+</RNText>
       </Button>
     </Wrapper>
   );

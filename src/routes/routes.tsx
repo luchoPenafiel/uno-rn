@@ -18,15 +18,14 @@ const BottomTabs = createBottomTabNavigator();
 
 const customStyles = {
   headerStyle: {
-    backgroundColor: theme.color.darkGray,
-    borderColor: 'red',
+    backgroundColor: theme.color.white,
   },
-  headerTintColor: theme.color.white,
+  headerTintColor: theme.color.darkGray,
   tabBarStyle: {
-    backgroundColor: theme.color.darkGray,
+    backgroundColor: theme.color.white,
   },
-  tabBarActiveTintColor: theme.color.yellow,
-  tabBarInactiveTintColor: theme.color.white,
+  tabBarActiveTintColor: theme.color.blue,
+  tabBarInactiveTintColor: theme.color.darkGray,
 };
 
 export const BottomNavigator = (): ReactElement => {
