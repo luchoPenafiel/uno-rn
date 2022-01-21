@@ -20,6 +20,8 @@ const InputWrapper = styled(View)`
 
 const Input = styled(TextInput)<{ screenWidth: number }>`
   width: ${({ screenWidth }) => `${screenWidth - theme.spaces.xl - 40 - 8}px`};
+  padding-top: ${theme.spaces.s}px;
+  padding-bottom: ${theme.spaces.s}px;
 
   color: ${theme.color.dark};
 `;
@@ -51,7 +53,7 @@ export const AddPlayer = ({ handlePress }: { handlePress: (name: string) => void
     <Wrapper>
       <InputWrapper>
         <Input
-          placeholder="Woody"
+          placeholder="Buzz Lightyear"
           onChangeText={onChangeName}
           value={name}
           screenWidth={screenWidth}

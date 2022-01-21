@@ -1,6 +1,6 @@
 // Vendor
 import React from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, LayoutAnimation } from 'react-native';
 
 // Components
 import { PageWrapper } from '@uno/components/PageWrapper';
@@ -16,7 +16,10 @@ import { Player } from '@uno/types/player';
 export const NewGame = () => {
   const { playerList, handleAddPlayer } = usePlayerContext();
 
-  const handlePress = (newName: string) => handleAddPlayer(newName);
+  const handlePress = (newName: string) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    handleAddPlayer(newName);
+  };
 
   return (
     <PageWrapper>
