@@ -5,10 +5,11 @@ import { useFocusEffect } from '@react-navigation/native';
 
 // Components
 import { PageWrapper } from '@uno/components/PageWrapper';
-import { Title, Text } from '@uno/components/Texts';
+import { Title, Text, Subtitle } from '@uno/components/Texts';
 import { AddPlayer } from '@uno/components/AddPlayer';
 import { SelectPlayer } from '@uno/components/SelectPlayer';
 import { Button } from '@uno/components/Button';
+import { MaxPoints } from '@uno/components/MaxPoints';
 
 // Context
 import { usePlayerContext } from '@uno/contexts/PlayersContext';
@@ -25,9 +26,10 @@ import { GameRouteNames, GameScreenProps } from '@uno/screens/Game/routes';
 export const NewGame = ({ navigation }: GameScreenProps) => {
   const { gameInProgress, setGameInProgress } = useAppContext();
   const { playerList, setNewPlayer } = usePlayerContext();
-  const { setPlayersInGame, setFinshGame } = useGameContext();
+  const { setNewGame, setFinshGame, totalGamePoints } = useGameContext();
 
   const [playerToPlay, setPlayerToPlay] = useState<Player[]>([]);
+  const [maxPointsToPlay, setMaxPointsToPlay] = useState<number>(totalGamePoints);
 
   const handleToggleIncludePlayerToPlay = (player: Player) => {
     const isAlreadyIncluded = playerToPlay.some(({ id }) => id === player.id);
@@ -47,8 +49,12 @@ export const NewGame = ({ navigation }: GameScreenProps) => {
     setPlayerToPlay(current => [...current, newPlayer]);
   };
 
+  const handeChangePoints = (points: string) => {
+    setMaxPointsToPlay(+points);
+  };
+
   const handleStartGame = () => {
-    setPlayersInGame(playerToPlay);
+    setNewGame(playerToPlay, maxPointsToPlay);
     setGameInProgress(true);
     navigation.navigate(GameRouteNames.GAME);
   };
@@ -96,6 +102,12 @@ export const NewGame = ({ navigation }: GameScreenProps) => {
               );
             })}
             <AddPlayer handlePress={handleAddNewPlayer} />
+
+            <View style={{ marginTop: theme.spaces['2xl'] }}>
+              <Subtitle>¿A cuantos puntos quieres jugar?</Subtitle>
+              <MaxPoints defaultPoints={totalGamePoints} onChange={handeChangePoints} />
+            </View>
+
             <View style={{ marginTop: theme.spaces['2xl'] }}>
               <Button disabled={playerToPlay.length < 2} onPress={handleStartGame}>
                 Comenzar Partida

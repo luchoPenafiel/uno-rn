@@ -9,6 +9,7 @@ export const KEY = 'uno-calculator-game';
 
 type GameData = {
   playersInGame: Player[];
+  totalGamePoints: number;
 };
 
 const setGameData = async (data: GameData) => {
@@ -30,31 +31,32 @@ const getGameData = async (): Promise<GameData | null> => {
 
 type GameContextType = {
   playersInGame: Player[];
-  setPlayersInGame: (players: Player[]) => void;
-  setUpdateGame: (player: Player, points: number) => void;
+  totalGamePoints: number;
+  setNewGame: (players: Player[], points: number) => void;
+  setPlayerPoints: (player: Player, points: number) => void;
   setFinshGame: () => void;
-};
-
-type Props = {
-  children: ReactNode;
 };
 
 const GameContext = createContext<GameContextType>({
   playersInGame: [],
-  setPlayersInGame: () => {},
-  setUpdateGame: () => {},
+  totalGamePoints: 500,
+  setNewGame: () => {},
+  setPlayerPoints: () => {},
   setFinshGame: () => {},
 });
 
-export const GameContextProvider = ({ children }: Props): ReactElement => {
+export const GameContextProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const [playersInGame, setStatePlayersInGame] = useState<Player[]>([]);
+  const [totalGamePoints, setStateTotalGamePoints] = useState(500);
 
-  const setPlayersInGame = useCallback((players: Player[]) => {
+  const setNewGame = useCallback((players: Player[], points) => {
     setStatePlayersInGame(players);
-    setGameData({ playersInGame: players });
+    setStateTotalGamePoints(points);
+
+    setGameData({ totalGamePoints: points, playersInGame: players });
   }, []);
 
-  const setUpdateGame = useCallback((player: Player, points: number) => {
+  const setPlayerPoints = useCallback((player: Player, points: number) => {
     setStatePlayersInGame(current => {
       const newPlayersInGame = current.map(p => {
         if (p.id === player.id) {
@@ -67,14 +69,16 @@ export const GameContextProvider = ({ children }: Props): ReactElement => {
         }
       });
 
-      setGameData({ playersInGame: newPlayersInGame });
+      setGameData({ totalGamePoints, playersInGame: newPlayersInGame });
 
       return newPlayersInGame;
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setFinshGame = () => {
     setStatePlayersInGame([]);
+    setStateTotalGamePoints(500);
     AsyncStorage.removeItem(KEY);
   };
 
@@ -84,12 +88,13 @@ export const GameContextProvider = ({ children }: Props): ReactElement => {
 
       if (data) {
         setStatePlayersInGame(data.playersInGame);
+        setStateTotalGamePoints(data.totalGamePoints);
       }
     })();
   }, []);
 
   return (
-    <GameContext.Provider value={{ playersInGame, setPlayersInGame, setUpdateGame, setFinshGame }}>
+    <GameContext.Provider value={{ playersInGame, setNewGame, setPlayerPoints, setFinshGame, totalGamePoints }}>
       {children}
     </GameContext.Provider>
   );

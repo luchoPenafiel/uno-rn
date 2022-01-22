@@ -17,7 +17,7 @@ import { GameScreenProps } from '@uno/screens/Game/routes';
 import theme from '@uno/constants/theme';
 
 export const AddPoints = ({ navigation, route }: GameScreenProps) => {
-  const { setUpdateGame } = useGameContext();
+  const { setPlayerPoints } = useGameContext();
 
   const [points, setPoints] = useState(0);
 
@@ -40,7 +40,7 @@ export const AddPoints = ({ navigation, route }: GameScreenProps) => {
         text: 'Guardar puntos',
         style: 'cancel',
         onPress: () => {
-          setUpdateGame(route.params.player, points);
+          setPlayerPoints(route.params.player, points);
           navigation.goBack();
         },
       },
