@@ -109,7 +109,7 @@ export const NewGame = ({ navigation }: GameScreenProps) => {
             </View>
 
             <View style={{ marginTop: theme.spaces['2xl'] }}>
-              <Button disabled={playerToPlay.length < 2} onPress={handleStartGame}>
+              <Button disabled={playerToPlay.length < 2 || !maxPointsToPlay} onPress={handleStartGame}>
                 Comenzar Partida
               </Button>
             </View>
