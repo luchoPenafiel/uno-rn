@@ -7,7 +7,6 @@ import { RouteProp } from '@react-navigation/native';
 import { Game, NewGame, AddPoints } from '@uno/screens/Game/GameScreens';
 
 // Contexts
-import { PlayerContextProvider } from '@uno/contexts/PlayersContext';
 import { GameContextProvider } from '@uno/contexts/GameContext';
 
 // Theme
@@ -38,19 +37,17 @@ const Stack = createStackNavigator<GameStackParamList>();
 
 export const GameStack = () => {
   return (
-    <PlayerContextProvider>
-      <GameContextProvider>
-        <Stack.Navigator
-          initialRouteName={GameRouteNames.NEW_GAME}
-          screenOptions={{
-            headerShown: false,
-            cardStyle: { backgroundColor: theme.color.white },
-          }}>
-          <Stack.Screen name={GameRouteNames.GAME} options={{ gestureEnabled: false }} component={Game} />
-          <Stack.Screen name={GameRouteNames.NEW_GAME} component={NewGame} />
-          <Stack.Screen name={GameRouteNames.ADD_POINTS} component={AddPoints} />
-        </Stack.Navigator>
-      </GameContextProvider>
-    </PlayerContextProvider>
+    <GameContextProvider>
+      <Stack.Navigator
+        initialRouteName={GameRouteNames.NEW_GAME}
+        screenOptions={{
+          headerShown: false,
+          cardStyle: { backgroundColor: theme.color.white },
+        }}>
+        <Stack.Screen name={GameRouteNames.GAME} options={{ gestureEnabled: false }} component={Game} />
+        <Stack.Screen name={GameRouteNames.NEW_GAME} component={NewGame} />
+        <Stack.Screen name={GameRouteNames.ADD_POINTS} component={AddPoints} />
+      </Stack.Navigator>
+    </GameContextProvider>
   );
 };

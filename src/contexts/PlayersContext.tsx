@@ -5,8 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Types
 import { Player } from '@uno/types/player';
 
-import mockUser from '@uno/mocks/users';
-
 const KEY = 'uno-calculator-players';
 
 type PlayersData = {
@@ -19,7 +17,7 @@ const setAppData = async (data: PlayersData) => {
   } catch {}
 };
 
-const getAppData = async (): Promise<PlayersData | null> => {
+export const getAppData = async (): Promise<PlayersData | null> => {
   try {
     const response = await AsyncStorage.getItem(KEY);
     if (response) {
@@ -33,7 +31,7 @@ const getAppData = async (): Promise<PlayersData | null> => {
 type PlayersContextType = {
   playerList: Player[];
   setNewPlayer: (playerName: string) => Player;
-  setUpdateAllPlayers: (player: Player, winnerId: string) => void;
+  setUpdateAllPlayers: (player: Player[], winnerId: string) => void;
 };
 
 type Props = {
@@ -55,7 +53,7 @@ const PlayerContext = createContext<PlayersContextType>({
 });
 
 export const PlayerContextProvider = ({ children }: Props): ReactElement => {
-  const [playerList, setStatePlayerList] = useState<Player[]>([...mockUser]);
+  const [playerList, setStatePlayerList] = useState<Player[]>([]);
 
   const setNewPlayer = useCallback((player: string) => {
     const newPlayer = { name: player, id: Date.now().toString(), totalPoints: 0, pointsInGame: 0, gamesWon: 0 };
@@ -71,28 +69,29 @@ export const PlayerContextProvider = ({ children }: Props): ReactElement => {
     return newPlayer;
   }, []);
 
-  const setUpdateAllPlayers = useCallback((player: Player, winnerId: string) => {
-    setStatePlayerList(current => {
-      const newPlayerList = current.map(p => {
-        if (p.id === player.id) {
-          return {
-            ...p,
-            totalPoints: p.totalPoints + player.pointsInGame,
-            gameWon: winnerId === p.id ? p.gamesWon + 1 : p.gamesWon,
-            pointsInGame: 0,
-          };
-        } else {
-          return p;
-        }
-      });
+  const setUpdateAllPlayers = (player: Player[], winnerId: string) => {
+    const newPlayerList = playerList.map(p => {
+      const playerToUpdate: Player | undefined = player.find(pl => pl.id === p.id);
 
-      setAppData({ playerList: newPlayerList });
-
-      return newPlayerList;
+      if (playerToUpdate) {
+        return {
+          ...playerToUpdate,
+          totalPoints: playerToUpdate.totalPoints + playerToUpdate.pointsInGame,
+          gamesWon: winnerId === playerToUpdate.id ? playerToUpdate.gamesWon + 1 : playerToUpdate.gamesWon,
+          pointsInGame: 0,
+        };
+      } else {
+        return p;
+      }
     });
-  }, []);
+
+    setStatePlayerList(newPlayerList);
+    setAppData({ playerList: [...newPlayerList] });
+  };
 
   useEffect(() => {
+    // AsyncStorage.removeItem(KEY);
+
     (async () => {
       const data = await getAppData();
 

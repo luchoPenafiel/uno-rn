@@ -22,6 +22,7 @@ const Wrapper = styled(View)`
 
 const ValueWrapper = styled(View)`
   flex-direction: row;
+  width: 50%;
 `;
 
 const Name = styled(RNText)`
@@ -32,8 +33,7 @@ const Name = styled(RNText)`
 `;
 
 const Value = styled(RNText)`
-  width: ${theme.spaces['2xl']}px;
-  margin-left: ${theme.spaces.s}px;
+  width: 100%;
   margin-bottom: 0;
 
   font-size: 16px;

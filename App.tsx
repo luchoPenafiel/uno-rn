@@ -4,6 +4,7 @@ import { StatusBar, LogBox, Platform, UIManager } from 'react-native';
 
 // Contexts
 import { AppContextProvider } from '@uno/contexts/AppContext';
+import { PlayerContextProvider } from '@uno/contexts/PlayersContext';
 
 // Routes
 import { Routes } from '@uno/routes/routes';
@@ -25,8 +26,10 @@ if (Platform.OS === 'android') {
 const App = () => {
   return (
     <AppContextProvider>
-      <StatusBar barStyle="dark-content" />
-      <Routes />
+      <PlayerContextProvider>
+        <StatusBar barStyle="dark-content" />
+        <Routes />
+      </PlayerContextProvider>
     </AppContextProvider>
   );
 };

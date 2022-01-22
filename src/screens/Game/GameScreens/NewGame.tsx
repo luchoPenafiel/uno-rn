@@ -56,6 +56,10 @@ export const NewGame = ({ navigation }: GameScreenProps) => {
   const handleStartGame = () => {
     setNewGame(playerToPlay, maxPointsToPlay);
     setGameInProgress(true);
+
+    setMaxPointsToPlay(totalGamePoints);
+    setPlayerToPlay([]);
+
     navigation.navigate(GameRouteNames.GAME);
   };
 
@@ -87,40 +91,33 @@ export const NewGame = ({ navigation }: GameScreenProps) => {
   return (
     <PageWrapper>
       <Title>Nueva Partida</Title>
+      <Text>{`${playerList.length > 1 ? 'Selecciona' : 'Agrega'} al menos dos jugadores para iniciar`}</Text>
       <>
-        {playerList.length > 1 ? (
-          <>
-            <Text>Selecciona al menos dos jugadores para iniciar</Text>
-            {playerList.map((p: Player) => {
-              return (
-                <SelectPlayer
-                  key={p.id}
-                  player={p}
-                  isActive={playerToPlay.some(({ id }) => id === p.id)}
-                  onPress={handleToggleIncludePlayerToPlay}
-                />
-              );
-            })}
-            <AddPlayer handlePress={handleAddNewPlayer} />
-
-            <View style={{ marginTop: theme.spaces['2xl'] }}>
-              <Subtitle>¿A cuantos puntos quieres jugar?</Subtitle>
-              <MaxPoints defaultPoints={totalGamePoints} onChange={handeChangePoints} />
-            </View>
-
-            <View style={{ marginTop: theme.spaces['2xl'] }}>
-              <Button disabled={playerToPlay.length < 2 || !maxPointsToPlay} onPress={handleStartGame}>
-                Comenzar Partida
-              </Button>
-            </View>
-          </>
-        ) : (
-          <>
-            <Text>Agrega al menos dos jugadores para iniciar una partida</Text>
-            <AddPlayer handlePress={handleAddNewPlayer} />
-          </>
-        )}
+        {playerList
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((p: Player) => {
+            return (
+              <SelectPlayer
+                key={p.id}
+                player={p}
+                isActive={playerToPlay.some(({ id }) => id === p.id)}
+                onPress={handleToggleIncludePlayerToPlay}
+              />
+            );
+          })}
       </>
+      <AddPlayer handlePress={handleAddNewPlayer} />
+
+      <View style={{ marginTop: theme.spaces['2xl'] }}>
+        <Subtitle>¿A cuantos puntos quieres jugar?</Subtitle>
+        <MaxPoints defaultPoints={totalGamePoints} onChange={handeChangePoints} />
+      </View>
+
+      <View style={{ marginTop: theme.spaces['2xl'] }}>
+        <Button disabled={playerToPlay.length < 2 || !maxPointsToPlay} onPress={handleStartGame}>
+          Comenzar Partida
+        </Button>
+      </View>
     </PageWrapper>
   );
 };

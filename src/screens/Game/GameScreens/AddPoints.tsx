@@ -71,6 +71,10 @@ export const AddPoints = ({ navigation, route }: GameScreenProps) => {
         <Text>+3</Text>
       </Pressable>
 
+      <Pressable onPress={() => handleAddPoints(200)}>
+        <Text>+200</Text>
+      </Pressable>
+
       <Subtitle>{`Puntos en la ronda:  ${points}`}</Subtitle>
       <Subtitle>{`Puntos totales:  ${route.params.player.pointsInGame + points}`}</Subtitle>
 
