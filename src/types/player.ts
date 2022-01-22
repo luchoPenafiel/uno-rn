@@ -1,6 +1,7 @@
 export type Player = {
   id: string;
   name: string;
-  points: number;
+  totalPoints: number;
+  pointsInGame: number;
   gamesWon: number;
 };

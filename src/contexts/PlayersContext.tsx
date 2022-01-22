@@ -7,7 +7,7 @@ import { Player } from '@uno/types/player';
 
 import mockUser from '@uno/mocks/users';
 
-const KEY = 'uno-calculator-data';
+const KEY = 'uno-calculator-players';
 
 type PlayersData = {
   playerList: Player[];
@@ -32,8 +32,8 @@ const getAppData = async (): Promise<PlayersData | null> => {
 
 type PlayersContextType = {
   playerList: Player[];
-  handleAddPlayer: (selectedMood: string) => Player;
-  handleUpdatePlayer: (selectedMood: Player) => void;
+  handleAddPlayer: (playerName: string) => Player;
+  handleUpdateAllPlayers: (player: Player, winnerId: string) => void;
 };
 
 type Props = {
@@ -43,21 +43,22 @@ type Props = {
 const DEFAULT_PLAYER = {
   id: '',
   name: '',
-  points: 0,
+  totalPoints: 0,
+  pointsInGame: 0,
   gamesWon: 0,
 };
 
 const PlayerContext = createContext<PlayersContextType>({
   playerList: [],
   handleAddPlayer: () => DEFAULT_PLAYER,
-  handleUpdatePlayer: () => {},
+  handleUpdateAllPlayers: () => {},
 });
 
 export const PlayerContextProvider = ({ children }: Props): ReactElement => {
   const [playerList, setPlayerList] = useState<Player[]>([...mockUser]);
 
   const handleAddPlayer = useCallback((player: string) => {
-    const newPlayer = { name: player, id: Date.now().toString(), points: 0, gamesWon: 0 };
+    const newPlayer = { name: player, id: Date.now().toString(), totalPoints: 0, pointsInGame: 0, gamesWon: 0 };
 
     setPlayerList(current => {
       const newPlayerList = [...current, newPlayer];
@@ -70,14 +71,15 @@ export const PlayerContextProvider = ({ children }: Props): ReactElement => {
     return newPlayer;
   }, []);
 
-  const handleUpdatePlayer = useCallback((player: Player) => {
+  const handleUpdateAllPlayers = useCallback((player: Player, winnerId: string) => {
     setPlayerList(current => {
       const newPlayerList = current.map(p => {
         if (p.id === player.id) {
           return {
             ...p,
-            points: p.points + player.points,
-            gameWon: p.gamesWon + player.gamesWon,
+            totalPoints: p.totalPoints + player.pointsInGame,
+            gameWon: winnerId === p.id ? p.gamesWon + 1 : p.gamesWon,
+            pointsInGame: 0,
           };
         } else {
           return p;
@@ -91,7 +93,7 @@ export const PlayerContextProvider = ({ children }: Props): ReactElement => {
   }, []);
 
   useEffect(() => {
-    // AsyncStorage.clear();
+    AsyncStorage.clear();
 
     (async () => {
       const data = await getAppData();
@@ -103,7 +105,7 @@ export const PlayerContextProvider = ({ children }: Props): ReactElement => {
   }, []);
 
   return (
-    <PlayerContext.Provider value={{ playerList, handleAddPlayer, handleUpdatePlayer }}>
+    <PlayerContext.Provider value={{ playerList, handleAddPlayer, handleUpdateAllPlayers }}>
       {children}
     </PlayerContext.Provider>
   );

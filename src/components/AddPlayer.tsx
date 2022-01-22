@@ -10,7 +10,7 @@ const Wrapper = styled(View)`
   flex-direction: row;
   justify-content: space-between;
 
-  margin-top: ${theme.spaces.m}px;
+  margin-top: ${theme.spaces.l}px;
 `;
 
 const InputWrapper = styled(View)`

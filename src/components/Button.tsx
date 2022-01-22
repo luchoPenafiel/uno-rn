@@ -6,11 +6,11 @@ import styled from 'styled-components';
 // Theme
 import theme from '@uno/constants/theme';
 
-const Wrapper = styled(Pressable)<{ disabled: boolean }>`
+const Wrapper = styled(Pressable)<{ disabled: boolean; color?: string }>`
   padding: ${theme.spaces.l}px;
-  margin-top: ${theme.spaces['2xl'] * 2}px;
+  margin-top: ${theme.spaces.m}px;
 
-  background-color: ${({ disabled }) => (disabled ? theme.color.gray : theme.color.blue)};
+  background-color: ${({ disabled, color }) => (disabled ? theme.color.gray : color ? color : theme.color.blue)};
   border-radius: ${theme.bordeRadius};
 `;
 
@@ -23,15 +23,17 @@ const TextStyled = styled(Text)<{ disabled: boolean }>`
 
 export const Button = ({
   children,
+  color,
   disabled,
   onPress,
 }: {
   children: string;
+  color?: string;
   disabled: boolean;
   onPress: () => void;
 }) => {
   return (
-    <Wrapper disabled={disabled} onPress={onPress}>
+    <Wrapper disabled={disabled} onPress={onPress} color={color}>
       <TextStyled disabled={disabled}>{children}</TextStyled>
     </Wrapper>
   );

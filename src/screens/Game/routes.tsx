@@ -5,26 +5,39 @@ import { createStackNavigator } from '@react-navigation/stack';
 // Screens
 import { Game, NewGame } from '@uno/screens/Game/GameScreens';
 
-// Context
+// Contexts
 import { PlayerContextProvider } from '@uno/contexts/PlayersContext';
+import { GameContextProvider } from '@uno/contexts/GameContext';
 
 // Theme
 import theme from '@uno/constants/theme';
 
-const Stack = createStackNavigator();
+export enum GameRouteNames {
+  GAME = 'game',
+  NEW_GAME = 'newGame',
+}
+
+export type GameStackParamList = {
+  [GameRouteNames.GAME]: undefined;
+  [GameRouteNames.NEW_GAME]: undefined;
+};
+
+const Stack = createStackNavigator<GameStackParamList>();
 
 export const GameStack = () => {
   return (
     <PlayerContextProvider>
-      <Stack.Navigator
-        initialRouteName="newGame"
-        screenOptions={{
-          headerShown: false,
-          cardStyle: { backgroundColor: theme.color.white },
-        }}>
-        <Stack.Screen name="game" component={Game} />
-        <Stack.Screen name="newGame" component={NewGame} />
-      </Stack.Navigator>
+      <GameContextProvider>
+        <Stack.Navigator
+          initialRouteName={GameRouteNames.NEW_GAME}
+          screenOptions={{
+            headerShown: false,
+            cardStyle: { backgroundColor: theme.color.white },
+          }}>
+          <Stack.Screen name={GameRouteNames.GAME} options={{ gestureEnabled: false }} component={Game} />
+          <Stack.Screen name={GameRouteNames.NEW_GAME} component={NewGame} />
+        </Stack.Navigator>
+      </GameContextProvider>
     </PlayerContextProvider>
   );
 };

@@ -30,7 +30,10 @@ export const Leaderboard = () => {
           {sortBy === 'games' ? (
             <TableOfPlayers playerList={playerList.sort((a, b) => b.gamesWon - a.gamesWon)} show={'gamesWon'} />
           ) : (
-            <TableOfPlayers playerList={playerList.sort((a, b) => b.points - a.points)} show={'points'} />
+            <TableOfPlayers
+              playerList={playerList.sort((a, b) => b.totalPoints - a.totalPoints)}
+              show={'totalPoints'}
+            />
           )}
         </>
       ) : (
