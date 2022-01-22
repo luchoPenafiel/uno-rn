@@ -11,13 +11,13 @@ type GameData = {
   playersInGame: Player[];
 };
 
-const setAppData = async (data: GameData) => {
+const setGameData = async (data: GameData) => {
   try {
     await AsyncStorage.setItem(KEY, JSON.stringify(data));
   } catch {}
 };
 
-const getAppData = async (): Promise<GameData | null> => {
+const getGameData = async (): Promise<GameData | null> => {
   try {
     const response = await AsyncStorage.getItem(KEY);
     if (response) {
@@ -30,9 +30,9 @@ const getAppData = async (): Promise<GameData | null> => {
 
 type GameContextType = {
   playersInGame: Player[];
-  handleStartNewGame: (players: Player[]) => void;
-  handleUpdateGame: (player: Player, points: number) => void;
-  handleFinshGame: () => void;
+  setPlayersInGame: (players: Player[]) => void;
+  setUpdateGame: (player: Player, points: number) => void;
+  setFinshGame: () => void;
 };
 
 type Props = {
@@ -41,20 +41,20 @@ type Props = {
 
 const GameContext = createContext<GameContextType>({
   playersInGame: [],
-  handleStartNewGame: () => {},
-  handleUpdateGame: () => {},
-  handleFinshGame: () => {},
+  setPlayersInGame: () => {},
+  setUpdateGame: () => {},
+  setFinshGame: () => {},
 });
 
 export const GameContextProvider = ({ children }: Props): ReactElement => {
-  const [playersInGame, setPlayersInGame] = useState<Player[]>([]);
+  const [playersInGame, setStatePlayersInGame] = useState<Player[]>([]);
 
-  const handleStartNewGame = useCallback((players: Player[]) => {
-    setPlayersInGame(players);
+  const setPlayersInGame = useCallback((players: Player[]) => {
+    setStatePlayersInGame(players);
   }, []);
 
-  const handleUpdateGame = useCallback((player: Player, points: number) => {
-    setPlayersInGame(current => {
+  const setUpdateGame = useCallback((player: Player, points: number) => {
+    setStatePlayersInGame(current => {
       const newPlayersInGame = current.map(p => {
         if (p.id === player.id) {
           return {
@@ -66,31 +66,30 @@ export const GameContextProvider = ({ children }: Props): ReactElement => {
         }
       });
 
-      setAppData({ playersInGame: newPlayersInGame });
+      setGameData({ playersInGame: newPlayersInGame });
 
       return newPlayersInGame;
     });
   }, []);
 
-  const handleFinshGame = () => {
-    setPlayersInGame([]);
+  const setFinshGame = () => {
+    setStatePlayersInGame([]);
     AsyncStorage.removeItem(KEY);
   };
 
   useEffect(() => {
     (async () => {
-      const data = await getAppData();
-
-      console.log('data recuperada', data);
+      const data = await getGameData();
 
       if (data) {
         setPlayersInGame(data.playersInGame);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <GameContext.Provider value={{ playersInGame, handleStartNewGame, handleUpdateGame, handleFinshGame }}>
+    <GameContext.Provider value={{ playersInGame, setPlayersInGame, setUpdateGame, setFinshGame }}>
       {children}
     </GameContext.Provider>
   );

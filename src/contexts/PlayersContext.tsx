@@ -32,8 +32,8 @@ const getAppData = async (): Promise<PlayersData | null> => {
 
 type PlayersContextType = {
   playerList: Player[];
-  handleAddPlayer: (playerName: string) => Player;
-  handleUpdateAllPlayers: (player: Player, winnerId: string) => void;
+  setNewPlayer: (playerName: string) => Player;
+  setUpdateAllPlayers: (player: Player, winnerId: string) => void;
 };
 
 type Props = {
@@ -50,17 +50,17 @@ const DEFAULT_PLAYER = {
 
 const PlayerContext = createContext<PlayersContextType>({
   playerList: [],
-  handleAddPlayer: () => DEFAULT_PLAYER,
-  handleUpdateAllPlayers: () => {},
+  setNewPlayer: () => DEFAULT_PLAYER,
+  setUpdateAllPlayers: () => {},
 });
 
 export const PlayerContextProvider = ({ children }: Props): ReactElement => {
-  const [playerList, setPlayerList] = useState<Player[]>([...mockUser]);
+  const [playerList, setStatePlayerList] = useState<Player[]>([...mockUser]);
 
-  const handleAddPlayer = useCallback((player: string) => {
+  const setNewPlayer = useCallback((player: string) => {
     const newPlayer = { name: player, id: Date.now().toString(), totalPoints: 0, pointsInGame: 0, gamesWon: 0 };
 
-    setPlayerList(current => {
+    setStatePlayerList(current => {
       const newPlayerList = [...current, newPlayer];
 
       setAppData({ playerList: newPlayerList });
@@ -71,8 +71,8 @@ export const PlayerContextProvider = ({ children }: Props): ReactElement => {
     return newPlayer;
   }, []);
 
-  const handleUpdateAllPlayers = useCallback((player: Player, winnerId: string) => {
-    setPlayerList(current => {
+  const setUpdateAllPlayers = useCallback((player: Player, winnerId: string) => {
+    setStatePlayerList(current => {
       const newPlayerList = current.map(p => {
         if (p.id === player.id) {
           return {
@@ -93,19 +93,17 @@ export const PlayerContextProvider = ({ children }: Props): ReactElement => {
   }, []);
 
   useEffect(() => {
-    AsyncStorage.clear();
-
     (async () => {
       const data = await getAppData();
 
       if (data) {
-        setPlayerList(data.playerList);
+        setStatePlayerList(data.playerList);
       }
     })();
   }, []);
 
   return (
-    <PlayerContext.Provider value={{ playerList, handleAddPlayer, handleUpdateAllPlayers }}>
+    <PlayerContext.Provider value={{ playerList, setNewPlayer, setUpdateAllPlayers }}>
       {children}
     </PlayerContext.Provider>
   );
