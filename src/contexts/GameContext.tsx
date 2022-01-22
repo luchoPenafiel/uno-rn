@@ -86,7 +86,6 @@ export const GameContextProvider = ({ children }: Props): ReactElement => {
         setStatePlayersInGame(data.playersInGame);
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

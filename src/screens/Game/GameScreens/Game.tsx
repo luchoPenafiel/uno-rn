@@ -23,13 +23,13 @@ export const Game = ({ navigation }: GameScreenProps) => {
   const { playersInGame, setFinshGame } = useGameContext();
 
   const handleFinishGame = () => {
-    Alert.alert('Terminar partida', '¿Realmente quieres terminar esta partida?', [
+    Alert.alert('Terminar partida', '¿Realmente quieres terminar esta partida? No podras continuarla luego.', [
       {
-        text: 'Continuar Partida',
+        text: 'Continuar partida',
         style: 'cancel',
       },
       {
-        text: 'Terminar Partida',
+        text: 'Terminar partida',
         onPress: () => {
           setGameInProgress(false);
           setFinshGame();
@@ -47,7 +47,12 @@ export const Game = ({ navigation }: GameScreenProps) => {
         {playersInGame
           .sort((a, b) => b.pointsInGame - a.pointsInGame)
           .map(p => (
-            <PlayerInGame key={p.id} name={p.name} points={p.pointsInGame} onPress={() => {}} />
+            <PlayerInGame
+              key={p.id}
+              name={p.name}
+              points={p.pointsInGame}
+              onPress={() => navigation.navigate(GameRouteNames.ADD_POINTS, { player: p })}
+            />
           ))}
       </>
 

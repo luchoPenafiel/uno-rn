@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import theme from '@uno/constants/theme';
 
 const Wrapper = styled(Pressable)<{ disabled: boolean; color?: string; outlined?: boolean }>`
-  padding: ${theme.spaces.l}px;
+  padding: ${theme.spaces.m}px ${theme.spaces.l}px;
   margin-top: ${theme.spaces.m}px;
 
   background-color: ${({ outlined, disabled, color }) =>

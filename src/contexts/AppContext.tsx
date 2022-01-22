@@ -6,10 +6,12 @@ export const KEY = 'uno-calculator-app';
 
 const DEFAULT_STATE = {
   gameInProgress: false,
+  firstGame: true,
 };
 
 type AppData = {
   gameInProgress: boolean;
+  firstGame: boolean;
 };
 
 const setAppData = async (data: AppData) => {
@@ -37,12 +39,16 @@ const getAppData = async (): Promise<AppData | null> => {
 
 type AppContextType = {
   gameInProgress: boolean;
+  firstGame: boolean;
   setGameInProgress: (value: boolean) => void;
+  setFirstGame: (value: boolean) => void;
 };
 
 const AppContext = createContext<AppContextType>({
   gameInProgress: false,
+  firstGame: true,
   setGameInProgress: () => {},
+  setFirstGame: () => {},
 });
 
 export const AppContextProvider = ({ children }: { children: ReactNode }): ReactElement => {
@@ -57,6 +63,15 @@ export const AppContextProvider = ({ children }: { children: ReactNode }): React
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const setFirstGame = useCallback(value => {
+    setStateAppData(current => {
+      return { ...current, firstGame: value };
+    });
+
+    setAppData({ ...appData, firstGame: value });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     (async () => {
       const data = await getAppData();
@@ -67,7 +82,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }): React
     })();
   }, []);
 
-  return <AppContext.Provider value={{ ...appData, setGameInProgress }}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ ...appData, setGameInProgress, setFirstGame }}>{children}</AppContext.Provider>;
 };
 
 export const useAppContext = () => useContext(AppContext);
