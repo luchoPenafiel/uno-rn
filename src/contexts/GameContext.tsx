@@ -51,6 +51,7 @@ export const GameContextProvider = ({ children }: Props): ReactElement => {
 
   const setPlayersInGame = useCallback((players: Player[]) => {
     setStatePlayersInGame(players);
+    setGameData({ playersInGame: players });
   }, []);
 
   const setUpdateGame = useCallback((player: Player, points: number) => {
@@ -82,7 +83,7 @@ export const GameContextProvider = ({ children }: Props): ReactElement => {
       const data = await getGameData();
 
       if (data) {
-        setPlayersInGame(data.playersInGame);
+        setStatePlayersInGame(data.playersInGame);
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps

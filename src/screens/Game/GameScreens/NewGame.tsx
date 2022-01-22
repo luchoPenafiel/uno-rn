@@ -1,7 +1,7 @@
 // Vendor
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { LayoutAnimation, Alert, View } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/native';
 
 // Components
 import { PageWrapper } from '@uno/components/PageWrapper';
@@ -13,21 +13,19 @@ import { Button } from '@uno/components/Button';
 // Context
 import { usePlayerContext } from '@uno/contexts/PlayersContext';
 import { useGameContext } from '@uno/contexts/GameContext';
+import { useAppContext } from '@uno/contexts/AppContext';
 
 // Types
 import { Player } from '@uno/types/player';
-import { GameStackParamList, GameRouteNames } from '@uno/screens/Game/routes';
 import theme from '@uno/constants/theme';
 
-type ProfileScreenNavigationProp = StackNavigationProp<GameStackParamList>;
+// Router
+import { GameRouteNames, GameScreenProps } from '@uno/screens/Game/routes';
 
-type Props = {
-  navigation: ProfileScreenNavigationProp;
-};
-
-export const NewGame = ({ navigation }: Props) => {
-  const { playerList, handleAddPlayer } = usePlayerContext();
-  const { playersInGame, handleFinshGame } = useGameContext();
+export const NewGame = ({ navigation }: GameScreenProps) => {
+  const { gameInProgress, setGameInProgress } = useAppContext();
+  const { playerList, setNewPlayer } = usePlayerContext();
+  const { setPlayersInGame, setFinshGame } = useGameContext();
 
   const [playerToPlay, setPlayerToPlay] = useState<Player[]>([]);
 
@@ -44,35 +42,41 @@ export const NewGame = ({ navigation }: Props) => {
 
   const handleAddNewPlayer = (newName: string) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    const newPlayer: Player = handleAddPlayer(newName);
+    const newPlayer: Player = setNewPlayer(newName);
 
     setPlayerToPlay(current => [...current, newPlayer]);
   };
 
   const handleStartGame = () => {
-    console.log('Start game');
+    setPlayersInGame(playerToPlay);
+    setGameInProgress(true);
+    navigation.navigate(GameRouteNames.GAME);
   };
 
-  useLayoutEffect(() => {
-    if (playersInGame.length) {
-      Alert.alert(
-        'Partina en progreso',
-        'Tienes una partida en curso, pensamos que tal vez quieras continuarla. ¿Quieres continuarla?',
-        [
-          {
-            text: 'Continuar Partida',
-            onPress: () => {
-              console.log('Continuar Partida');
-              navigation.navigate(GameRouteNames.GAME);
+  const handleFinshGame = () => {
+    setFinshGame();
+    setGameInProgress(false);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      if (gameInProgress) {
+        Alert.alert(
+          'Partida en progreso',
+          'Tienes una partida en curso, pensamos que tal vez quieras continuarla. ¿Quieres continuarla?',
+          [
+            {
+              text: 'Continuar Partida',
+              onPress: () => navigation.navigate(GameRouteNames.GAME),
+              style: 'cancel',
             },
-            style: 'cancel',
-          },
-          { text: 'Nueva Partida', onPress: () => handleFinshGame() },
-        ],
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playersInGame]);
+            { text: 'Nueva Partida', onPress: () => handleFinshGame() },
+          ],
+        );
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [gameInProgress]),
+  );
 
   return (
     <PageWrapper>

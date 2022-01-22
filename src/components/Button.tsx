@@ -6,16 +6,19 @@ import styled from 'styled-components';
 // Theme
 import theme from '@uno/constants/theme';
 
-const Wrapper = styled(Pressable)<{ disabled: boolean; color?: string }>`
+const Wrapper = styled(Pressable)<{ disabled: boolean; color?: string; outlined?: boolean }>`
   padding: ${theme.spaces.l}px;
   margin-top: ${theme.spaces.m}px;
 
-  background-color: ${({ disabled, color }) => (disabled ? theme.color.gray : color ? color : theme.color.blue)};
+  background-color: ${({ outlined, disabled, color }) =>
+    outlined ? theme.color.white : disabled ? theme.color.gray : color ? color : theme.color.blue};
   border-radius: ${theme.bordeRadius};
+  border: 2px solid ${({ disabled, color }) => (disabled ? theme.color.gray : color ? color : theme.color.blue)};
 `;
 
-const TextStyled = styled(Text)<{ disabled: boolean }>`
-  color: ${theme.color.darkGray};
+const TextStyled = styled(Text)<{ disabled: boolean; color?: string; outlined?: boolean }>`
+  color: ${({ color, outlined }) =>
+    outlined ? color : color === theme.color.red ? theme.color.white : theme.color.darkGray};
 
   text-align: center;
   font-size: 18px;
@@ -24,17 +27,21 @@ const TextStyled = styled(Text)<{ disabled: boolean }>`
 export const Button = ({
   children,
   color,
-  disabled,
+  disabled = false,
+  outlined = false,
   onPress,
 }: {
   children: string;
   color?: string;
-  disabled: boolean;
+  outlined?: boolean;
+  disabled?: boolean;
   onPress: () => void;
 }) => {
   return (
-    <Wrapper disabled={disabled} onPress={onPress} color={color}>
-      <TextStyled disabled={disabled}>{children}</TextStyled>
+    <Wrapper disabled={disabled} onPress={onPress} color={color} outlined={outlined}>
+      <TextStyled disabled={disabled} color={color} outlined={outlined}>
+        {children}
+      </TextStyled>
     </Wrapper>
   );
 };

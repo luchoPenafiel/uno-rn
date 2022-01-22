@@ -1,15 +1,12 @@
 // Vendor
 import React from 'react';
-import { View, Text as RNText } from 'react-native';
+import { Pressable, Text as RNText } from 'react-native';
 import styled from 'styled-components';
-
-// Types
-import { Player } from '@uno/types/player';
 
 // Theme
 import theme from '@uno/constants/theme';
 
-const Wrapper = styled(View)`
+const Wrapper = styled(Pressable)`
   flex-direction: row;
   justify-content: space-between;
 
@@ -18,10 +15,6 @@ const Wrapper = styled(View)`
 
   background-color: ${theme.color.gray};
   border-radius: ${theme.bordeRadius};
-`;
-
-const ValueWrapper = styled(View)`
-  flex-direction: row;
 `;
 
 const Name = styled(RNText)`
@@ -40,19 +33,11 @@ const Value = styled(RNText)`
   text-align: right;
 `;
 
-export const TableOfPlayers = ({ playerList, show }: { playerList: Player[]; show: 'totalPoints' | 'gamesWon' }) => {
+export const PlayerInGame = ({ name, points, onPress }: { name: string; points: number; onPress: () => void }) => {
   return (
-    <>
-      {playerList.map(p => {
-        return (
-          <Wrapper key={p.id}>
-            <Name>{p.name}</Name>
-            <ValueWrapper>
-              <Value>{`${p[show]}`}</Value>
-            </ValueWrapper>
-          </Wrapper>
-        );
-      })}
-    </>
+    <Wrapper onPress={onPress}>
+      <Name>{name}</Name>
+      <Value>{`${points}`}</Value>
+    </Wrapper>
   );
 };

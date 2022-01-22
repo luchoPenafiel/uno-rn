@@ -1,6 +1,7 @@
 // Vendor
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 // Screens
 import { Game, NewGame } from '@uno/screens/Game/GameScreens';
@@ -20,6 +21,12 @@ export enum GameRouteNames {
 export type GameStackParamList = {
   [GameRouteNames.GAME]: undefined;
   [GameRouteNames.NEW_GAME]: undefined;
+};
+
+type ProfileScreenNavigationProp = StackNavigationProp<GameStackParamList>;
+
+export type GameScreenProps = {
+  navigation: ProfileScreenNavigationProp;
 };
 
 const Stack = createStackNavigator<GameStackParamList>();
