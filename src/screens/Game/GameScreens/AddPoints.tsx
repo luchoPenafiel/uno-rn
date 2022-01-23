@@ -1,11 +1,13 @@
+/* eslint-disable react-native/no-inline-styles */
 // Vendor
 import React, { useState } from 'react';
-import { Pressable, View, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
 
 // Components
 import { PageWrapper } from '@uno/components/PageWrapper';
 import { Title, Subtitle, Text } from '@uno/components/Texts';
 import { Button } from '@uno/components/Button';
+import { Card } from '@uno/components/Card';
 
 // Context
 import { useGameContext } from '@uno/contexts/GameContext';
@@ -59,26 +61,38 @@ export const AddPoints = ({ navigation, route }: GameScreenProps) => {
       <Title>Puntaje</Title>
       <Text>{`Selecciona cartas para ir sumando puntos para ${route.params.player.name}`}</Text>
 
-      <Pressable onPress={() => handleAddPoints(1)}>
-        <Text>+1</Text>
-      </Pressable>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+        <Card color={theme.color.blue} label="0" onPress={() => handleAddPoints(0)} />
+        <Card color={theme.color.yellow} label="1" onPress={() => handleAddPoints(1)} />
+        <Card color={theme.color.green} label="2" onPress={() => handleAddPoints(2)} />
+        <Card color={theme.color.red} label="3" onPress={() => handleAddPoints(3)} />
 
-      <Pressable onPress={() => handleAddPoints(2)}>
-        <Text>+2</Text>
-      </Pressable>
+        <Card color={theme.color.yellow} label="4" onPress={() => handleAddPoints(4)} />
+        <Card color={theme.color.green} label="5" onPress={() => handleAddPoints(5)} />
+        <Card color={theme.color.red} label="6" onPress={() => handleAddPoints(6)} />
+        <Card color={theme.color.blue} label="7" onPress={() => handleAddPoints(7)} />
 
-      <Pressable onPress={() => handleAddPoints(3)}>
-        <Text>+3</Text>
-      </Pressable>
-
-      <Pressable onPress={() => handleAddPoints(200)}>
-        <Text>+200</Text>
-      </Pressable>
+        <Card color={theme.color.green} label="8" onPress={() => handleAddPoints(8)} />
+        <Card color={theme.color.red} label="9" onPress={() => handleAddPoints(9)} />
+        <Card color={theme.color.blue} label="+2" onPress={() => handleAddPoints(20)} />
+        <Card color={theme.color.yellow} specialCard="revert" onPress={() => handleAddPoints(20)} />
+      </View>
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', flexWrap: 'wrap' }}>
+        <Card color={theme.color.red} specialCard="block" onPress={() => handleAddPoints(20)} />
+        <Card
+          color={theme.color.dark}
+          label="+4"
+          specialCard="plus-four"
+          withMarginLeft
+          onPress={() => handleAddPoints(50)}
+        />
+        <Card color={theme.color.dark} specialCard="wildcard" withMarginLeft onPress={() => handleAddPoints(50)} />
+      </View>
 
       <Subtitle>{`Puntos en la ronda:  ${points}`}</Subtitle>
       <Subtitle>{`Puntos totales:  ${route.params.player.pointsInGame + points}`}</Subtitle>
 
-      <View style={{ marginTop: theme.spaces['2xl'] }}>
+      <View style={{ marginTop: theme.spaces.m }}>
         <Button onPress={handleSavePoints} color={theme.color.green}>
           Guardar Puntos
         </Button>
