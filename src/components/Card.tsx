@@ -7,7 +7,6 @@ import { RevertIcon, BlockIcon } from '@uno/components/Icons';
 
 // Theme
 import theme from '@uno/constants/theme';
-import { transform } from '@babel/core';
 
 const Wrapper = styled(Pressable)<{ withMarginLeft?: boolean; screenHeight: number }>`
   width: 22%;
