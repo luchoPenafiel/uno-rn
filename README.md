@@ -4,7 +4,7 @@ This is a React Native project/
 
 ## DEMO
 
-![UNO](UNO.mp4)
+![UNO](./UNO.mp4)
 
 ## Getting Started
 
