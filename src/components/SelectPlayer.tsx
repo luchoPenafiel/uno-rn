@@ -17,7 +17,8 @@ const Wrapper = styled(Pressable)<{ isActive: boolean }>`
   border-radius: ${theme.bordeRadius};
 `;
 
-const Value = styled(RNText)`
+const Value = styled(RNText)<{ isActive: boolean }>`
+  color: ${({ isActive }) => (isActive ? theme.color.white : theme.color.darkGray)};
   font-size: 16px;
 `;
 
@@ -35,7 +36,7 @@ export const SelectPlayer = ({
   };
   return (
     <Wrapper isActive={isActive} onPress={handlePress}>
-      <Value>{player.name}</Value>
+      <Value isActive={isActive}>{player.name}</Value>
     </Wrapper>
   );
 };

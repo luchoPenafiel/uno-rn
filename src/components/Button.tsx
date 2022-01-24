@@ -17,8 +17,7 @@ const Wrapper = styled(Pressable)<{ disabled: boolean; color?: string; outlined?
 `;
 
 const TextStyled = styled(Text)<{ disabled: boolean; color?: string; outlined?: boolean }>`
-  color: ${({ color, outlined }) =>
-    outlined ? color : color === theme.color.red ? theme.color.white : theme.color.darkGray};
+  color: ${({ disabled, outlined, color }) => (outlined ? color : disabled ? theme.color.darkGray : theme.color.white)};
 
   text-align: center;
   font-size: 18px;

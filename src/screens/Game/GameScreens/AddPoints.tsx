@@ -5,7 +5,7 @@ import { View, Alert } from 'react-native';
 
 // Components
 import { PageWrapper } from '@uno/components/PageWrapper';
-import { Title, Subtitle, Text } from '@uno/components/Texts';
+import { Title, Text } from '@uno/components/Texts';
 import { Button } from '@uno/components/Button';
 import { Card } from '@uno/components/Card';
 
@@ -58,9 +58,8 @@ export const AddPoints = ({ navigation, route }: GameScreenProps) => {
 
   return (
     <PageWrapper>
-      <Title>Puntaje</Title>
+      <Title>{`Puntaje: ${points}`}</Title>
       <Text>{`Selecciona cartas para ir sumando puntos para ${route.params.player.name}`}</Text>
-
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }}>
         <Card color={theme.color.blue} label="0" onPress={() => handleAddPoints(0)} />
         <Card color={theme.color.yellow} label="1" onPress={() => handleAddPoints(1)} />
@@ -88,10 +87,6 @@ export const AddPoints = ({ navigation, route }: GameScreenProps) => {
         />
         <Card color={theme.color.dark} specialCard="wildcard" withMarginLeft onPress={() => handleAddPoints(50)} />
       </View>
-
-      <Subtitle>{`Puntos en la ronda:  ${points}`}</Subtitle>
-      <Subtitle>{`Puntos totales:  ${route.params.player.pointsInGame + points}`}</Subtitle>
-
       <View style={{ marginTop: theme.spaces.m }}>
         <Button onPress={handleSavePoints} color={theme.color.green}>
           Guardar Puntos
