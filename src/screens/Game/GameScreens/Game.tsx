@@ -1,6 +1,6 @@
 // Vendor
 import React, { useCallback } from 'react';
-import { Alert, View } from 'react-native';
+import { Alert, View, Linking } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
 // Context
@@ -20,10 +20,46 @@ import theme from '@uno/constants/theme';
 // Router
 import { GameRouteNames, GameScreenProps } from '@uno/screens/Game/routes';
 
+// Types
+import { Player } from '@uno/types/player';
+
 export const Game = ({ navigation }: GameScreenProps) => {
-  const { setGameInProgress } = useAppContext();
+  const { setGameInProgress, firstGame, setFirstGame } = useAppContext();
   const { playersInGame, setFinshGame, totalGamePoints } = useGameContext();
   const { setUpdateAllPlayers } = usePlayerContext();
+
+  const handleFinshGame = (winner: Player) => {
+    setUpdateAllPlayers(playersInGame, winner.id);
+    setGameInProgress(false);
+    setFinshGame();
+
+    if (firstGame) {
+      Alert.alert(
+        '¡Terminaste tu primer juego!',
+        '¿Te gustó la aplicación? Si es así y puedes regalarme un cafecito. Todos los cafecitos van a ser destinados a un rediseño de la aplicación',
+        [
+          {
+            text: 'Regalar Cafecito',
+            style: 'cancel',
+            onPress: () => {
+              setFirstGame(false);
+              Linking.openURL('https://cafecito.app/luchopenafiel');
+              navigation.navigate(GameRouteNames.NEW_GAME);
+            },
+          },
+          {
+            text: 'Tal vez lo haré luego',
+            onPress: () => {
+              setFirstGame(false);
+              navigation.navigate(GameRouteNames.NEW_GAME);
+            },
+          },
+        ],
+      );
+    } else {
+      navigation.navigate(GameRouteNames.NEW_GAME);
+    }
+  };
 
   const handelCanelGame = () => {
     Alert.alert('Terminar partida', '¿Realmente quieres terminar esta partida? No podras continuarla luego.', [
@@ -44,17 +80,14 @@ export const Game = ({ navigation }: GameScreenProps) => {
 
   useFocusEffect(
     useCallback(() => {
-      const hasWinner = playersInGame.find(p => p.pointsInGame > totalGamePoints - 1);
+      const winner = playersInGame.find(p => p.pointsInGame > totalGamePoints - 1);
 
-      if (hasWinner) {
-        Alert.alert('¡Felicitaciones!', `¡${hasWinner.name} ha ganado la partida!`, [
+      if (winner) {
+        Alert.alert('¡Felicitaciones!', `¡${winner.name} ha ganado la partida!`, [
           {
             text: 'OK',
             onPress: () => {
-              setUpdateAllPlayers(playersInGame, hasWinner.id);
-              setGameInProgress(false);
-              setFinshGame();
-              navigation.navigate(GameRouteNames.NEW_GAME);
+              handleFinshGame(winner);
             },
           },
         ]);
