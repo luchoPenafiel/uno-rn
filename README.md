@@ -4,7 +4,8 @@ This is a React Native project/
 
 ## DEMO
 
-![UNO](UNO.mp4)
+https://user-images.githubusercontent.com/25674406/150867745-3020abb0-71f3-4b11-a246-8289f7edbda1.mp4
+
 
 ## Getting Started
 
