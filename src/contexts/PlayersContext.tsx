@@ -90,8 +90,6 @@ export const PlayerContextProvider = ({ children }: Props): ReactElement => {
   };
 
   useEffect(() => {
-    // AsyncStorage.removeItem(KEY);
-
     (async () => {
       const data = await getAppData();
 

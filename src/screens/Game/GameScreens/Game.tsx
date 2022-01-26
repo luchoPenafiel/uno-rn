@@ -27,7 +27,7 @@ import { logEvent } from '@uno/utils/analytics';
 import { Player } from '@uno/types/player';
 
 export const Game = ({ navigation }: GameScreenProps) => {
-  const { setGameInProgress, firstGame, setFirstGame } = useAppContext();
+  const { setGameInProgress, giveCoffe, setGiveCoffe } = useAppContext();
   const { playersInGame, setFinshGame, totalGamePoints } = useGameContext();
   const { setUpdateAllPlayers } = usePlayerContext();
 
@@ -36,7 +36,7 @@ export const Game = ({ navigation }: GameScreenProps) => {
     setGameInProgress(false);
     setFinshGame();
 
-    if (firstGame) {
+    if (giveCoffe) {
       Alert.alert(
         '¡Terminaste tu primer juego!',
         '¿Te gustó la aplicación? Si es así y puedes regalarme un cafecito. Todos los cafecitos van a ser destinados a un rediseño de la aplicación',
@@ -45,7 +45,7 @@ export const Game = ({ navigation }: GameScreenProps) => {
             text: 'Regalar Cafecito',
             style: 'cancel',
             onPress: () => {
-              setFirstGame(false);
+              setGiveCoffe(false);
               Linking.openURL('https://cafecito.app/luchopenafiel');
               navigation.navigate(GameRouteNames.NEW_GAME);
               logEvent('give_coffe');
@@ -54,7 +54,6 @@ export const Game = ({ navigation }: GameScreenProps) => {
           {
             text: 'Tal vez lo haré luego',
             onPress: () => {
-              setFirstGame(false);
               navigation.navigate(GameRouteNames.NEW_GAME);
               logEvent('not_give_coffe');
             },
