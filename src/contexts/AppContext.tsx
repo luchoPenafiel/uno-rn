@@ -73,8 +73,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }): React
   }, []);
 
   useEffect(() => {
-    AsyncStorage.clear();
-
     (async () => {
       const data = await getAppData();
 
