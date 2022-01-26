@@ -2,6 +2,7 @@
 // Vendor
 import React, { useState } from 'react';
 import { View, Alert } from 'react-native';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 // Components
 import { PageWrapper } from '@uno/components/PageWrapper';
@@ -22,6 +23,7 @@ export const AddPoints = ({ navigation, route }: GameScreenProps) => {
   const { setPlayerPoints } = useGameContext();
 
   const [points, setPoints] = useState(0);
+  const [historyCard, setHistoryCard] = useState<number[]>([]);
 
   const handleCancelSum = () => {
     Alert.alert('Cancelar suma', '¿Realmente quieres cancelar esta sumatoria?', [
@@ -52,8 +54,36 @@ export const AddPoints = ({ navigation, route }: GameScreenProps) => {
     ]);
   };
 
+  const triggerHapticFeedback = ({ isError }: { isError?: boolean }) => {
+    const options = {
+      enableVibrateFallback: false,
+      ignoreAndroidSystemSettings: true,
+    };
+
+    ReactNativeHapticFeedback.trigger(isError ? 'notificationError' : 'impactMedium', options);
+  };
+
   const handleAddPoints = (value: number) => {
     setPoints(current => current + value);
+    setHistoryCard(current => [...current, value]);
+    triggerHapticFeedback({ isError: false });
+  };
+
+  const undoLastCard = () => {
+    if (points <= 0) {
+      triggerHapticFeedback({ isError: true });
+      return;
+    } else {
+      const lastCard = historyCard[historyCard.length - 1];
+
+      if (lastCard) {
+        setPoints(current => current - lastCard);
+        setHistoryCard(current => {
+          return current.slice(0, -1);
+        });
+      }
+      triggerHapticFeedback({ isError: false });
+    }
   };
 
   return (
@@ -75,17 +105,11 @@ export const AddPoints = ({ navigation, route }: GameScreenProps) => {
         <Card color={theme.color.red} label="9" onPress={() => handleAddPoints(9)} />
         <Card color={theme.color.blue} label="+2" onPress={() => handleAddPoints(20)} />
         <Card color={theme.color.yellow} specialCard="revert" onPress={() => handleAddPoints(20)} />
-      </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', flexWrap: 'wrap' }}>
+
         <Card color={theme.color.red} specialCard="block" onPress={() => handleAddPoints(20)} />
-        <Card
-          color={theme.color.dark}
-          label="+4"
-          specialCard="plus-four"
-          withMarginLeft
-          onPress={() => handleAddPoints(50)}
-        />
-        <Card color={theme.color.dark} specialCard="wildcard" withMarginLeft onPress={() => handleAddPoints(50)} />
+        <Card color={theme.color.dark} label="+4" specialCard="plus-four" onPress={() => handleAddPoints(50)} />
+        <Card color={theme.color.dark} specialCard="wildcard" onPress={() => handleAddPoints(50)} />
+        <Card color={theme.color.white} label="Deshacer" onlyText onPress={undoLastCard} />
       </View>
       <View style={{ marginTop: theme.spaces.m }}>
         <Button onPress={handleSavePoints} color={theme.color.green}>

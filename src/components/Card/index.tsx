@@ -13,14 +13,14 @@ import { RevertIcon, BlockIcon } from '@uno/components/Icons';
 // Theme
 import theme from '@uno/constants/theme';
 
-const Wrapper = styled(Pressable)<{ withMarginLeft?: boolean; screenHeight: number }>`
+const Wrapper = styled(Pressable)<{ withMarginLeft?: boolean; screenHeight: number; onlyText?: boolean }>`
   width: 22%;
   height: ${({ screenHeight }) => screenHeight / 7}px;
 
   margin-bottom: ${theme.spaces.m}px;
   margin-left: ${({ withMarginLeft }) => (withMarginLeft ? '4%' : 0)};
 
-  border: 1px solid ${theme.color.dark};
+  border: 1px ${({ onlyText }) => (onlyText ? 'dotted' : 'solid')} ${theme.color.dark};
   border-radius: ${theme.bordeRadius};
 `;
 
@@ -96,9 +96,9 @@ const ValueIcon = styled(View)`
   transform: scale(1.5);
 `;
 
-const Value = styled(Text)<{ color: string }>`
-  color: ${({ color }) => color};
-  font-size: 26px;
+const Value = styled(Text)<{ color: string; onlyText?: boolean }>`
+  color: ${({ color }) => (color === theme.color.white ? theme.color.dark : color)};
+  font-size: ${({ onlyText }) => (onlyText ? '14px' : '26px')};
 `;
 
 export const Card = ({
@@ -106,18 +106,20 @@ export const Card = ({
   label,
   withMarginLeft,
   specialCard,
+  onlyText,
   onPress,
 }: {
   color: string;
   label?: string;
   withMarginLeft?: boolean;
   specialCard?: 'block' | 'revert' | 'wildcard' | 'plus-four';
+  onlyText?: boolean;
   onPress: () => void;
 }) => {
   const screenHeight = Dimensions.get('screen').height;
 
   return (
-    <Wrapper withMarginLeft={withMarginLeft} screenHeight={screenHeight} onPress={onPress}>
+    <Wrapper withMarginLeft={withMarginLeft} screenHeight={screenHeight} onPress={onPress} onlyText={onlyText}>
       <InnerWrapper color={color}>
         {label ? <Label>{label}</Label> : null}
 
@@ -156,7 +158,9 @@ export const Card = ({
             <PlusFour />
           )
         ) : (
-          <Value color={color}>{label}</Value>
+          <Value color={color} onlyText={onlyText}>
+            {label}
+          </Value>
         )}
 
         {label ? <LabelInvert>{label}</LabelInvert> : null}
