@@ -6,12 +6,12 @@ export const KEY = 'uno-calculator-app';
 
 const DEFAULT_STATE = {
   gameInProgress: false,
-  firstGame: true,
+  giveCoffe: true,
 };
 
 type AppData = {
   gameInProgress: boolean;
-  firstGame: boolean;
+  giveCoffe: boolean;
 };
 
 const setAppData = async (data: AppData) => {
@@ -39,16 +39,16 @@ const getAppData = async (): Promise<AppData | null> => {
 
 type AppContextType = {
   gameInProgress: boolean;
-  firstGame: boolean;
+  giveCoffe: boolean;
   setGameInProgress: (value: boolean) => void;
-  setFirstGame: (value: boolean) => void;
+  setGiveCoffe: (value: boolean) => void;
 };
 
 const AppContext = createContext<AppContextType>({
   gameInProgress: false,
-  firstGame: true,
+  giveCoffe: true,
   setGameInProgress: () => {},
-  setFirstGame: () => {},
+  setGiveCoffe: () => {},
 });
 
 export const AppContextProvider = ({ children }: { children: ReactNode }): ReactElement => {
@@ -63,12 +63,12 @@ export const AppContextProvider = ({ children }: { children: ReactNode }): React
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const setFirstGame = useCallback(value => {
+  const setGiveCoffe = useCallback(value => {
     setStateAppData(current => {
-      return { ...current, firstGame: value };
+      return { ...current, giveCoffe: value };
     });
 
-    setAppData({ ...appData, firstGame: value });
+    setAppData({ ...appData, giveCoffe: value });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -82,7 +82,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }): React
     })();
   }, []);
 
-  return <AppContext.Provider value={{ ...appData, setGameInProgress, setFirstGame }}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ ...appData, setGameInProgress, setGiveCoffe }}>{children}</AppContext.Provider>;
 };
 
 export const useAppContext = () => useContext(AppContext);
