@@ -20,6 +20,9 @@ import theme from '@uno/constants/theme';
 // Router
 import { GameRouteNames, GameScreenProps } from '@uno/screens/Game/routes';
 
+// Utils
+import { logEvent } from '@uno/utils/analytics';
+
 // Types
 import { Player } from '@uno/types/player';
 
@@ -45,6 +48,7 @@ export const Game = ({ navigation }: GameScreenProps) => {
               setFirstGame(false);
               Linking.openURL('https://cafecito.app/luchopenafiel');
               navigation.navigate(GameRouteNames.NEW_GAME);
+              logEvent('give_coffe');
             },
           },
           {
@@ -52,6 +56,7 @@ export const Game = ({ navigation }: GameScreenProps) => {
             onPress: () => {
               setFirstGame(false);
               navigation.navigate(GameRouteNames.NEW_GAME);
+              logEvent('not_give_coffe');
             },
           },
         ],
@@ -59,6 +64,8 @@ export const Game = ({ navigation }: GameScreenProps) => {
     } else {
       navigation.navigate(GameRouteNames.NEW_GAME);
     }
+
+    logEvent('finish_game');
   };
 
   const handelCanelGame = () => {
@@ -73,6 +80,7 @@ export const Game = ({ navigation }: GameScreenProps) => {
           setGameInProgress(false);
           setFinshGame();
           navigation.navigate(GameRouteNames.NEW_GAME);
+          logEvent('cancel_game');
         },
       },
     ]);

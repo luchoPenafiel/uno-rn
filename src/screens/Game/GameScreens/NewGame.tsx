@@ -20,6 +20,9 @@ import { useAppContext } from '@uno/contexts/AppContext';
 import { Player } from '@uno/types/player';
 import theme from '@uno/constants/theme';
 
+// Utils
+import { logEvent } from '@uno/utils/analytics';
+
 // Router
 import { GameRouteNames, GameScreenProps } from '@uno/screens/Game/routes';
 
@@ -60,12 +63,14 @@ export const NewGame = ({ navigation }: GameScreenProps) => {
     setMaxPointsToPlay(totalGamePoints);
     setPlayerToPlay([]);
 
+    logEvent('new_game', { playerToPlay: playerToPlay.length, maxPointsToPlay });
     navigation.navigate(GameRouteNames.GAME);
   };
 
   const handleFinshGame = () => {
     setFinshGame();
     setGameInProgress(false);
+    logEvent('gip_cancel');
   };
 
   useFocusEffect(
@@ -77,7 +82,10 @@ export const NewGame = ({ navigation }: GameScreenProps) => {
           [
             {
               text: 'Continuar Partida',
-              onPress: () => navigation.navigate(GameRouteNames.GAME),
+              onPress: () => {
+                navigation.navigate(GameRouteNames.GAME);
+                logEvent('gip_continue');
+              },
               style: 'cancel',
             },
             { text: 'Nueva Partida', onPress: () => handleFinshGame() },
