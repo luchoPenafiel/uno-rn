@@ -38,7 +38,7 @@ export const Game = ({ navigation }: GameScreenProps) => {
 
     if (giveCoffe) {
       Alert.alert(
-        '¡Terminaste tu primer juego!',
+        '¿Re diseñamos la app?',
         '¿Te gustó la aplicación? Si es así y puedes regalarme un cafecito. Todos los cafecitos van a ser destinados a un rediseño de la aplicación',
         [
           {
