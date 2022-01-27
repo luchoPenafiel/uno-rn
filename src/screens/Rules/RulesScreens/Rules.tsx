@@ -10,7 +10,7 @@ export const Rules = () => {
     <PageWrapper>
       <Title>Objetivo del juego</Title>
       <Text>
-        El objetivo de UNO es deshacerse de todas las cartas que se “roban” inicialmente, diciendo la palabra “UNO”
+        El objetivo del juego es deshacerse de todas las cartas que se “roban” inicialmente, diciendo la palabra “a una”
         cuando queda la última carta en la mano. El primero que llega a los puntos establecidos gana. Se recibe puntos
         por todas las cartas que los otros jugadores todavía tienen en sus manos (véase puntos).
       </Text>
@@ -28,7 +28,7 @@ export const Rules = () => {
         en una carta del mismo color o del mismo número. Las cartas negras son cartas de acción especiales con reglas
         particulares (ver cartas de acción). Si un jugador no puede poner la carta oportuna, tiene que tomar una carta
         de pena del mazo. Puede jugar esta carta ahora mismo, si la vale bien. Si no, es el turno del siguiente jugador.
-        Quién pone la penúltima carta, debe decir “UNO” y señala que tiene sólo una última carta en la mano. Si un
+        Quién pone la penúltima carta, debe decir “a una” y señala que tiene sólo una última carta en la mano. Si un
         jugador lo olvida y el otro lo nota a tiempo (antes de que el siguiente jugador haya tomado o ha depuesto una
         carta) tiene que tomar dos cartas de pena. El ganador de la ronda es él que depone la última carta. Los puntos
         se suman y se comienza una nueva ronda.
@@ -87,8 +87,8 @@ export const Rules = () => {
       </Text>
 
       <ListItem>
-        UNO: Si un jugador olvida llamar “UNO” después de su penúltima carta y el siguiente jugador aún no ha jugado su
-        carta, debe tomar una carta de pena.
+        A una: Si un jugador olvida llamar “a una” después de su penúltima carta y el siguiente jugador aún no ha jugado
+        su carta, debe tomar una carta de pena.
       </ListItem>
       <ListItem>Propuestas: Quién hace propuestas a sus jugadores, debe tomar dos cartas de pena.</ListItem>
       <ListItem>
@@ -117,7 +117,7 @@ export const Rules = () => {
 
       <Title>Variantes del juego</Title>
       <Text>
-        Las reglas estandar del UNO son las mencionadas anteriormente, pero existen distintas variantes a las que los
+        Las reglas estandar del juego son las mencionadas anteriormente, pero existen distintas variantes a las que los
         jugadores pueden someterse.
       </Text>
     </PageWrapper>
