@@ -98,7 +98,7 @@ const ValueIcon = styled(View)`
 
 const Value = styled(Text)<{ color: string; onlyText?: boolean }>`
   color: ${({ color }) => (color === theme.color.white ? theme.color.dark : color)};
-  font-size: ${({ onlyText }) => (onlyText ? '14px' : '26px')};
+  font-size: ${({ onlyText }) => (onlyText ? '12px' : '26px')};
 `;
 
 export const Card = ({

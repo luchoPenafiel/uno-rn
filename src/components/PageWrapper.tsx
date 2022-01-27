@@ -20,7 +20,7 @@ const InnerWrapper = styled(View)<{ screenHeigth: number }>`
 export const PageWrapper = ({ children }: { children: ReactElement | ReactElement[] }) => {
   const screenHeigth = Dimensions.get('screen').height;
   return (
-    <View style={{ backgroundColor: theme.color.blue }}>
+    <View>
       <SafeAreaView style={{ backgroundColor: theme.color.white }}>
         <Wrapper bounces={false}>
           <InnerWrapper screenHeigth={screenHeigth}>{children}</InnerWrapper>
