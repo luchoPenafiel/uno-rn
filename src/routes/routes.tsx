@@ -1,18 +1,22 @@
 // Vendor
-import React, { ReactElement } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { ReactElement, useRef } from 'react';
+import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 
 // Vendor
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // Screens
 import { Game, Leaderboard, Rules } from '@uno/screens';
+import { GameStackParamList } from '@uno/screens/Game/routes';
 
 // Theme
 import theme from '@uno/constants/theme';
 
 // Icons
 import { MedalIcon, PageIcon, StarIcon } from '@uno/components/Icons';
+
+// Utils
+import { trackScreen } from '@uno/utils/analytics';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -53,8 +57,21 @@ export const BottomNavigator = (): ReactElement => {
 };
 
 export const Routes = () => {
+  const navigationRef = useRef<NavigationContainerRef<GameStackParamList>>(null);
+  const routeNameRef = useRef('');
+
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      onStateChange={async () => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;
+
+        if (previousRouteName !== currentRouteName) {
+          await trackScreen(`${currentRouteName}`);
+        }
+
+        routeNameRef.current = `${currentRouteName}`;
+      }}>
       <BottomNavigator />
     </NavigationContainer>
   );
