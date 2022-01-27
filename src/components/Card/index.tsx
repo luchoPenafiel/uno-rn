@@ -13,9 +13,14 @@ import { RevertIcon, BlockIcon } from '@uno/components/Icons';
 // Theme
 import theme from '@uno/constants/theme';
 
-const Wrapper = styled(Pressable)<{ withMarginLeft?: boolean; screenHeight: number; onlyText?: boolean }>`
-  width: 22%;
-  height: ${({ screenHeight }) => screenHeight / 7}px;
+const Wrapper = styled(Pressable)<{
+  withMarginLeft?: boolean;
+  cardWidth: number;
+  cardHeight: number;
+  onlyText?: boolean;
+}>`
+  width: ${({ cardWidth }) => cardWidth}px;
+  height: ${({ cardHeight }) => cardHeight}px;
 
   margin-bottom: ${theme.spaces.m}px;
   margin-left: ${({ withMarginLeft }) => (withMarginLeft ? '4%' : 0)};
@@ -41,21 +46,21 @@ const InnerWrapper = styled(View)<{ color: string }>`
 const OvalWrapper = styled(View)`
   position: absolute;
   top: 22%;
-  left: -4px;
+  left: -10%;
 
   width: 100%;
 
-  transform: rotate(-50deg);
+  transform: rotate(-55deg);
 `;
 
-const Oval = styled(View)<{ screenHeight: number }>`
-  width: 127%;
-  height: ${({ screenHeight }) => screenHeight / 11}px;
+const Oval = styled(View)<{ cardWidth: number; cardHeight: number }>`
+  width: ${({ cardWidth }) => cardWidth * 1.2}px;
+  height: ${({ cardHeight }) => cardHeight / 1.4}px;
 
   border-radius: 999px;
   background-color: ${theme.color.white};
 
-  transform: scaleY(0.6);
+  transform: scaleY(0.5);
 `;
 
 const LabelIcon = styled(View)`
@@ -116,15 +121,23 @@ export const Card = ({
   onlyText?: boolean;
   onPress: () => void;
 }) => {
-  const screenHeight = Dimensions.get('screen').height;
+  const screenWidth = Dimensions.get('screen').width;
+
+  const cardWidth = (screenWidth - 40 - 25) / 4;
+  const cardHeight = cardWidth * 1.65;
 
   return (
-    <Wrapper withMarginLeft={withMarginLeft} screenHeight={screenHeight} onPress={onPress} onlyText={onlyText}>
+    <Wrapper
+      withMarginLeft={withMarginLeft}
+      cardWidth={cardWidth}
+      cardHeight={cardHeight}
+      onPress={onPress}
+      onlyText={onlyText}>
       <InnerWrapper color={color}>
         {label ? <Label>{label}</Label> : null}
 
         <OvalWrapper>
-          <Oval screenHeight={screenHeight} />
+          <Oval cardWidth={cardWidth} cardHeight={cardHeight} />
         </OvalWrapper>
 
         {specialCard ? (
@@ -153,7 +166,7 @@ export const Card = ({
               </LabelIconInvert>
             </>
           ) : specialCard === 'wildcard' ? (
-            <Wildcard />
+            <Wildcard cardWidth={cardWidth} cardHeight={cardHeight} />
           ) : (
             <PlusFour />
           )

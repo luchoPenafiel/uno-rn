@@ -1,17 +1,22 @@
 // Vendor
 import React from 'react';
-import { View, Dimensions } from 'react-native';
+import { View } from 'react-native';
 import styled from 'styled-components';
 
 // Theme
 import theme from '@uno/constants/theme';
 
-const WildcardWrapper = styled(View)<{ screenHeight: number }>`
+const WildcardWrapper = styled(View)<{ cardWidth: number; cardHeight: number }>`
   display: flex;
   flex-wrap: wrap;
 
-  width: 127%;
-  height: ${({ screenHeight }) => screenHeight / 11}px;
+  width: ${({ cardWidth }) => cardWidth * 1.2}px;
+  height: ${({ cardHeight }) => cardHeight / 1.4}px;
+
+  border-radius: 999px;
+  background-color: ${theme.color.white};
+
+  transform: scaleY(0.5);
 
   border-radius: 999px;
 
@@ -28,49 +33,41 @@ const WildcardBlock = styled(View)<{ color: string }>`
   background-color: ${({ color }) => color};
 `;
 
-const WildcardIcon = styled(View)<{ screenHeight: number }>`
+const WildcardIcon = styled(View)`
   position: absolute;
-  top: -24%;
-  left: -50%;
-
-  width: 127%;
-  height: ${({ screenHeight }) => screenHeight / 11}px;
+  top: -30%;
+  left: -55%;
 
   transform: scale(0.2);
 `;
 
-const WildcardIconInvert = styled(View)<{ screenHeight: number }>`
+const WildcardIconInvert = styled(View)`
   position: absolute;
-  bottom: -24%;
-  right: -50%;
-
-  width: 127%;
-  height: ${({ screenHeight }) => screenHeight / 11}px;
+  bottom: -30%;
+  right: -55%;
 
   transform: scale(0.2) rotate(180deg);
 `;
 
-export const Wildcard = () => {
-  const screenHeight = Dimensions.get('screen').height;
-
+export const Wildcard = ({ cardWidth, cardHeight }: { cardWidth: number; cardHeight: number }) => {
   return (
     <>
-      <WildcardIcon screenHeight={screenHeight}>
-        <WildcardWrapper screenHeight={screenHeight}>
+      <WildcardIcon>
+        <WildcardWrapper cardWidth={cardWidth} cardHeight={cardHeight}>
           <WildcardBlock color={theme.color.blue} />
           <WildcardBlock color={theme.color.yellow} />
           <WildcardBlock color={theme.color.red} />
           <WildcardBlock color={theme.color.green} />
         </WildcardWrapper>
       </WildcardIcon>
-      <WildcardWrapper screenHeight={screenHeight}>
+      <WildcardWrapper cardWidth={cardWidth} cardHeight={cardHeight}>
         <WildcardBlock color={theme.color.blue} />
         <WildcardBlock color={theme.color.yellow} />
         <WildcardBlock color={theme.color.red} />
         <WildcardBlock color={theme.color.green} />
       </WildcardWrapper>
-      <WildcardIconInvert screenHeight={screenHeight}>
-        <WildcardWrapper screenHeight={screenHeight}>
+      <WildcardIconInvert>
+        <WildcardWrapper cardWidth={cardWidth} cardHeight={cardHeight}>
           <WildcardBlock color={theme.color.blue} />
           <WildcardBlock color={theme.color.yellow} />
           <WildcardBlock color={theme.color.red} />
