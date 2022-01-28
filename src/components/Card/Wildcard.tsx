@@ -13,16 +13,12 @@ const WildcardWrapper = styled(View)<{ cardWidth: number; cardHeight: number }>`
   width: ${({ cardWidth }) => cardWidth * 1.2}px;
   height: ${({ cardHeight }) => cardHeight / 1.4}px;
 
-  border-radius: 999px;
   background-color: ${theme.color.white};
 
-  transform: scaleY(0.5);
-
   border-radius: 999px;
 
-  transform: scaleY(0.6) rotate(-50deg);
+  transform: scaleY(0.5) rotate(-55deg);
 
-  border: 4px solid ${theme.color.white};
   overflow: hidden;
 `;
 

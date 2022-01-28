@@ -38,8 +38,8 @@ const InnerWrapper = styled(View)<{ color: string }>`
   height: 100%;
   padding: 2px;
 
-  background-color: ${({ color }) => color};
-  border: 4px solid ${theme.color.white};
+  background-color: ${theme.color.white};
+  border: 4px solid ${({ color }) => color};
   border-radius: ${theme.bordeRadius};
 `;
 
@@ -53,12 +53,12 @@ const OvalWrapper = styled(View)`
   transform: rotate(-55deg);
 `;
 
-const Oval = styled(View)<{ cardWidth: number; cardHeight: number }>`
+const Oval = styled(View)<{ cardWidth: number; cardHeight: number; color: string }>`
   width: ${({ cardWidth }) => cardWidth * 1.2}px;
   height: ${({ cardHeight }) => cardHeight / 1.4}px;
 
   border-radius: 999px;
-  background-color: ${theme.color.white};
+  background-color: ${({ color }) => color};
 
   transform: scaleY(0.5);
 `;
@@ -79,30 +79,30 @@ const LabelIconInvert = styled(View)`
   transform: rotate(180deg) scale(0.8);
 `;
 
-const Label = styled(Text)`
+const Label = styled(Text)<{ color: string }>`
   position: absolute;
   top: 2px;
   left: 2px;
 
-  color: ${theme.color.white};
+  color: ${({ color }) => color};
 `;
 
-const LabelInvert = styled(Text)<{ invert?: boolean }>`
+const LabelInvert = styled(Text)<{ invert?: boolean; color: string }>`
   position: absolute;
   bottom: 2px;
   right: 2px;
 
   transform: rotate(180deg);
 
-  color: ${theme.color.white};
+  color: ${({ color }) => color};
 `;
 
 const ValueIcon = styled(View)`
   transform: scale(1.5);
 `;
 
-const Value = styled(Text)<{ color: string; onlyText?: boolean }>`
-  color: ${({ color }) => (color === theme.color.white ? theme.color.dark : color)};
+const Value = styled(Text)<{ onlyText?: boolean }>`
+  color: ${({ onlyText }) => (onlyText ? theme.color.darkGray : theme.color.white)};
   font-size: ${({ onlyText }) => (onlyText ? '12px' : '26px')};
 `;
 
@@ -134,35 +134,39 @@ export const Card = ({
       onPress={onPress}
       onlyText={onlyText}>
       <InnerWrapper color={color}>
-        {label ? <Label>{label}</Label> : null}
+        {label ? <Label color={color}>{label}</Label> : null}
 
         <OvalWrapper>
-          <Oval cardWidth={cardWidth} cardHeight={cardHeight} />
+          <Oval
+            color={specialCard === 'wildcard' ? theme.color.white : color}
+            cardWidth={cardWidth}
+            cardHeight={cardHeight}
+          />
         </OvalWrapper>
 
         {specialCard ? (
           specialCard === 'block' ? (
             <>
               <LabelIcon>
-                <BlockIcon color={theme.color.white} />
+                <BlockIcon color={color} />
               </LabelIcon>
               <ValueIcon>
-                <BlockIcon color={color} />
+                <BlockIcon color={theme.color.white} />
               </ValueIcon>
               <LabelIconInvert>
-                <BlockIcon color={theme.color.white} />
+                <BlockIcon color={color} />
               </LabelIconInvert>
             </>
           ) : specialCard === 'revert' ? (
             <>
               <LabelIcon>
-                <RevertIcon color={theme.color.white} />
+                <RevertIcon color={color} />
               </LabelIcon>
               <ValueIcon>
-                <RevertIcon color={color} />
+                <RevertIcon color={theme.color.white} />
               </ValueIcon>
               <LabelIconInvert>
-                <RevertIcon color={theme.color.white} />
+                <RevertIcon color={color} />
               </LabelIconInvert>
             </>
           ) : specialCard === 'wildcard' ? (
@@ -171,12 +175,10 @@ export const Card = ({
             <PlusFour />
           )
         ) : (
-          <Value color={color} onlyText={onlyText}>
-            {label}
-          </Value>
+          <Value onlyText={onlyText}>{label}</Value>
         )}
 
-        {label ? <LabelInvert>{label}</LabelInvert> : null}
+        {label ? <LabelInvert color={color}>{label}</LabelInvert> : null}
       </InnerWrapper>
     </Wrapper>
   );
