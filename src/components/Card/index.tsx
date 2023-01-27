@@ -18,6 +18,7 @@ const Wrapper = styled(Pressable)<{
   cardWidth: number;
   cardHeight: number;
   onlyText?: boolean;
+  color: string;
 }>`
   width: ${({ cardWidth }) => cardWidth}px;
   height: ${({ cardHeight }) => cardHeight}px;
@@ -25,7 +26,7 @@ const Wrapper = styled(Pressable)<{
   margin-bottom: ${theme.spaces.m}px;
   margin-left: ${({ withMarginLeft }) => (withMarginLeft ? '4%' : 0)};
 
-  border: 1px ${({ onlyText }) => (onlyText ? 'dotted' : 'solid')} ${theme.color.dark};
+  border: 1px ${({ onlyText }) => (onlyText ? 'dotted' : 'solid')} #000;
   border-radius: ${theme.bordeRadius};
 `;
 
@@ -38,8 +39,8 @@ const InnerWrapper = styled(View)<{ color: string }>`
   height: 100%;
   padding: 2px;
 
-  background-color: ${theme.color.white};
-  border: 4px solid ${({ color }) => color};
+  background-color: ${({ color }) => color};
+  border: 4px solid #fff;
   border-radius: ${theme.bordeRadius};
 `;
 
@@ -58,7 +59,7 @@ const Oval = styled(View)<{ cardWidth: number; cardHeight: number; color: string
   height: ${({ cardHeight }) => cardHeight / 1.4}px;
 
   border-radius: 999px;
-  background-color: ${({ color }) => color};
+  background-color: ${theme.color.white};
 
   transform: scaleY(0.5);
 `;
@@ -84,7 +85,7 @@ const Label = styled(Text)<{ color: string }>`
   top: 2px;
   left: 2px;
 
-  color: ${({ color }) => color};
+  color: ${theme.color.darkGray};
 `;
 
 const LabelInvert = styled(Text)<{ invert?: boolean; color: string }>`
@@ -94,7 +95,7 @@ const LabelInvert = styled(Text)<{ invert?: boolean; color: string }>`
 
   transform: rotate(180deg);
 
-  color: ${({ color }) => color};
+  color: ${theme.color.darkGray}; ;
 `;
 
 const ValueIcon = styled(View)`
@@ -102,7 +103,7 @@ const ValueIcon = styled(View)`
 `;
 
 const Value = styled(Text)<{ onlyText?: boolean }>`
-  color: ${({ onlyText }) => (onlyText ? theme.color.darkGray : theme.color.white)};
+  color: ${theme.color.darkGray};
   font-size: ${({ onlyText }) => (onlyText ? '12px' : '26px')};
 `;
 
@@ -132,9 +133,10 @@ export const Card = ({
       cardWidth={cardWidth}
       cardHeight={cardHeight}
       onPress={onPress}
-      onlyText={onlyText}>
+      onlyText={onlyText}
+      color={color}>
       <InnerWrapper color={color}>
-        {label ? <Label color={color}>{label}</Label> : null}
+        {label && !onlyText ? <Label color={color}>{label}</Label> : null}
 
         <OvalWrapper>
           <Oval
@@ -151,7 +153,7 @@ export const Card = ({
                 <BlockIcon color={color} />
               </LabelIcon>
               <ValueIcon>
-                <BlockIcon color={theme.color.white} />
+                <BlockIcon color={color} />
               </ValueIcon>
               <LabelIconInvert>
                 <BlockIcon color={color} />
@@ -163,7 +165,7 @@ export const Card = ({
                 <RevertIcon color={color} />
               </LabelIcon>
               <ValueIcon>
-                <RevertIcon color={theme.color.white} />
+                <RevertIcon color={color} />
               </ValueIcon>
               <LabelIconInvert>
                 <RevertIcon color={color} />
@@ -178,7 +180,7 @@ export const Card = ({
           <Value onlyText={onlyText}>{label}</Value>
         )}
 
-        {label ? <LabelInvert color={color}>{label}</LabelInvert> : null}
+        {label && !onlyText ? <LabelInvert color={color}>{label}</LabelInvert> : null}
       </InnerWrapper>
     </Wrapper>
   );
