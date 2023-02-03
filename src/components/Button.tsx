@@ -11,13 +11,13 @@ const Wrapper = styled(Pressable)<{ disabled: boolean; color?: string; outlined?
   margin-top: ${theme.spaces.m}px;
 
   background-color: ${({ outlined, disabled, color }) =>
-    outlined ? theme.color.white : disabled ? theme.color.gray : color ? color : theme.color.blue};
+    outlined ? theme.color.dark : disabled ? theme.color.gray : color ? color : theme.color.blue};
   border-radius: ${theme.bordeRadius};
   border: 2px solid ${({ disabled, color }) => (disabled ? theme.color.gray : color ? color : theme.color.blue)};
 `;
 
 const TextStyled = styled(Text)<{ disabled: boolean; color?: string; outlined?: boolean }>`
-  color: ${({ disabled, outlined, color }) => (outlined ? color : disabled ? theme.color.darkGray : theme.color.white)};
+  color: ${({ outlined, color }) => (outlined ? color : theme.color.dark)};
 
   text-align: center;
   font-size: 18px;

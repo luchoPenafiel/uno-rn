@@ -18,7 +18,7 @@ const Wrapper = styled(Pressable)<{ isActive: boolean }>`
 `;
 
 const Value = styled(RNText)<{ isActive: boolean }>`
-  color: ${({ isActive }) => (isActive ? theme.color.white : theme.color.darkGray)};
+  color: ${({ isActive }) => (isActive ? theme.color.darkGray : theme.color.dark)};
   font-size: 16px;
 `;
 

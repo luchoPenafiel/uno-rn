@@ -11,7 +11,7 @@ const Wrapper = styled(View)`
   flex-direction: row;
 
   margin-top: ${theme.spaces.l}px;
-  border-bottom-color: ${theme.color.darkGray};
+  border-bottom-color: ${theme.color.gray};
   border-bottom-width: 1px;
 `;
 
@@ -19,7 +19,7 @@ const Tab = styled(Pressable)<{ active: boolean }>`
   width: 50%;
 
   text-align: center;
-  border-bottom-color: ${theme.color.darkGray};
+  border-bottom-color: ${theme.color.gray};
   border-bottom-width: ${({ active }) => (active ? '1px' : 0)};
 `;
 

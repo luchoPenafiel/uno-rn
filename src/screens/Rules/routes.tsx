@@ -14,7 +14,7 @@ export const RulesStack = () => {
   return (
     <Stack.Navigator
       initialRouteName="rules"
-      screenOptions={{ headerShown: false, cardStyle: { backgroundColor: theme.color.white } }}>
+      screenOptions={{ headerShown: false, cardStyle: { backgroundColor: theme.color.dark } }}>
       <Stack.Screen name="rules" component={Rules} />
     </Stack.Navigator>
   );

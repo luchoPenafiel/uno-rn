@@ -42,7 +42,7 @@ export const GameStack = () => {
         initialRouteName={GameRouteNames.NEW_GAME}
         screenOptions={{
           headerShown: false,
-          cardStyle: { backgroundColor: theme.color.white },
+          cardStyle: { backgroundColor: theme.color.dark },
         }}>
         <Stack.Screen name={GameRouteNames.GAME} options={{ gestureEnabled: false }} component={Game} />
         <Stack.Screen name={GameRouteNames.NEW_GAME} component={NewGame} />

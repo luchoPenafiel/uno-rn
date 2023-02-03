@@ -8,7 +8,7 @@ const TextStyles = styled(RNText)<{ align?: string }>`
   margin-bottom: 10px;
 
   font-size: 16px;
-  color: ${theme.color.dark};
+  color: ${theme.color.white};
   text-align: ${({ align }) => (align ? align : 'left')};
 `;
 
@@ -22,7 +22,7 @@ const TitleStyles = styled(RNText)`
 
   font-size: 26px;
   font-weight: bold;
-  color: ${theme.color.dark};
+  color: ${theme.color.white};
 `;
 
 export const Title = ({ children }: { children: string }) => {
@@ -35,7 +35,7 @@ const SubtitleStyles = styled(RNText)`
 
   font-size: 18px;
   font-weight: bold;
-  color: ${theme.color.dark};
+  color: ${theme.color.white};
 `;
 
 export const Subtitle = ({ children }: { children: string }) => {
@@ -51,14 +51,14 @@ const ListItemWrapper = styled(View)`
 
 const ListItemBullet = styled(RNText)`
   font-size: 16px;
-  color: ${theme.color.dark};
+  color: ${theme.color.white};
 `;
 
 const ListItemStyles = styled(RNText)`
   margin-left: 4px;
 
   font-size: 16px;
-  color: ${theme.color.dark};
+  color: ${theme.color.white};
 `;
 
 export const ListItem = ({ children }: { children: string }) => {

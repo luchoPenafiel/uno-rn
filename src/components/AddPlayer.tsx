@@ -14,7 +14,7 @@ const Wrapper = styled(View)`
 `;
 
 const InputWrapper = styled(View)`
-  border-bottom-color: ${theme.color.darkGray};
+  border-bottom-color: ${theme.color.gray};
   border-bottom-width: 1px;
 `;
 
@@ -23,7 +23,7 @@ const Input = styled(TextInput)<{ screenWidth: number }>`
   padding-top: ${theme.spaces.s}px;
   padding-bottom: ${theme.spaces.s}px;
 
-  color: ${theme.color.dark};
+  color: ${theme.color.white};
   font-size: 16px;
 `;
 
@@ -58,11 +58,11 @@ export const AddPlayer = ({ handlePress }: { handlePress: (name: string) => void
           onChangeText={onChangeName}
           value={name}
           screenWidth={screenWidth}
-          placeholderTextColor={theme.color.gray}
+          placeholderTextColor={theme.color.white}
         />
       </InputWrapper>
       <Button onPress={onPress} disabled={!name}>
-        <RNText style={{ color: theme.color.white }}>+</RNText>
+        <RNText style={{ color: theme.color.dark }}>+</RNText>
       </Button>
     </Wrapper>
   );

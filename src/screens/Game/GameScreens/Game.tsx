@@ -1,6 +1,6 @@
 // Vendor
 import React, { useCallback } from 'react';
-import { Alert, View, Linking } from 'react-native';
+import { Alert, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
 // Context
@@ -27,7 +27,7 @@ import { logEvent } from '@uno/utils/analytics';
 import { Player } from '@uno/types/player';
 
 export const Game = ({ navigation }: GameScreenProps) => {
-  const { setGameInProgress, giveCoffe, setGiveCoffe } = useAppContext();
+  const { setGameInProgress } = useAppContext();
   const { playersInGame, setFinshGame, totalGamePoints } = useGameContext();
   const { setUpdateAllPlayers } = usePlayerContext();
 
@@ -36,33 +36,7 @@ export const Game = ({ navigation }: GameScreenProps) => {
     setGameInProgress(false);
     setFinshGame();
 
-    if (giveCoffe) {
-      Alert.alert(
-        '¿Re diseñamos la app?',
-        '¿Te gustó la aplicación? Si es así y puedes regalarme un cafecito. Todos los cafecitos van a ser destinados a un rediseño de la aplicación',
-        [
-          {
-            text: 'Regalar Cafecito',
-            style: 'cancel',
-            onPress: () => {
-              setGiveCoffe(false);
-              Linking.openURL('https://cafecito.app/luchopenafiel');
-              navigation.navigate(GameRouteNames.NEW_GAME);
-              logEvent('give_coffe');
-            },
-          },
-          {
-            text: 'Tal vez lo haré luego',
-            onPress: () => {
-              navigation.navigate(GameRouteNames.NEW_GAME);
-              logEvent('not_give_coffe');
-            },
-          },
-        ],
-      );
-    } else {
-      navigation.navigate(GameRouteNames.NEW_GAME);
-    }
+    navigation.navigate(GameRouteNames.NEW_GAME);
 
     logEvent('finish_game');
   };

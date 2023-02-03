@@ -14,7 +14,7 @@ export const LeaderboardStack = () => {
   return (
     <Stack.Navigator
       initialRouteName="leaderboard"
-      screenOptions={{ headerShown: false, cardStyle: { backgroundColor: theme.color.white } }}>
+      screenOptions={{ headerShown: false, cardStyle: { backgroundColor: theme.color.dark } }}>
       <Stack.Screen name="leaderboard" component={Leaderboard} />
     </Stack.Navigator>
   );

@@ -16,7 +16,7 @@ const Wrapper = styled(View)`
   padding: ${theme.spaces.m}px;
   margin-top: 10px;
 
-  background-color: ${theme.color.gray};
+  background-color: ${theme.color.darkGray};
   border-radius: ${theme.bordeRadius};
 `;
 
@@ -30,6 +30,7 @@ const Name = styled(RNText)`
   margin-bottom: 0;
 
   font-size: 16px;
+  color: ${theme.color.white};
 `;
 
 const Value = styled(RNText)`
@@ -38,6 +39,7 @@ const Value = styled(RNText)`
 
   font-size: 16px;
   text-align: right;
+  color: ${theme.color.white};
 `;
 
 export const TableOfPlayers = ({ playerList, show }: { playerList: Player[]; show: 'totalPoints' | 'gamesWon' }) => {
